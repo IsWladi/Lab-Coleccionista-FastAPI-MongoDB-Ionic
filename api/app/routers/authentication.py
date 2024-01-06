@@ -5,6 +5,7 @@ from bson import ObjectId
 from bson.json_util import dumps
 import json
 import bcrypt
+import os
 
 # para definir el modelo de datos(body de la peticion)
 from pydantic import BaseModel
@@ -14,9 +15,16 @@ class UserRegistration(BaseModel):
     username: str
     password: str
 
-# Configurar las credenciales de autenticación
-username = "admin"
-password = "myPassword123"
+# Configurar las credenciales de autenticación de la BDD
+username = ""
+password = ""
+if os.environ.get("PRODUCTION") == "True":
+	username = os.environ.get("MONGO_INITDB_ROOT_USERNAME")
+	password = os.environ.get("MONGO_INITDB_ROOT_PASSWORD")
+else:
+	username = "admin"
+	password = "myPassword123"
+
 # Crear una instancia del cliente de MongoDB
 mongo_client = MongoClient("mongodb://coleccionista-bd-test:27017/",
                            username=username,
