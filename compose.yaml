@@ -1,0 +1,34 @@
+services:
+  db:
+    image: mongo:5.0
+    container_name: coleccionista-bd-test
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=myPassword123
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_Coleccionista:/data/db
+      - mongodb_config_Coleccionista:/data/configdb
+    networks:
+      - Coleccionista_net
+
+  api:
+    container_name: coleccionista-api-test
+    build: ./api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 80
+    volumes:
+      - ./api:/code/
+    ports:
+      - "8000:80"
+
+    depends_on:
+      - db
+    networks:
+      - Coleccionista_net
+
+networks:
+  Coleccionista_net:
+volumes:
+  mongodb_Coleccionista:
+  mongodb_config_Coleccionista:

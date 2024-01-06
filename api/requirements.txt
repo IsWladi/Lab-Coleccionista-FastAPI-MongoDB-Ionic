@@ -1,0 +1,5 @@
+fastapi==0.108.0
+uvicorn[standard]
+pymongo
+bcrypt
+resend==0.6.0
