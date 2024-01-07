@@ -24,8 +24,8 @@ if os.environ.get("PRODUCTION") == "True":
 	password = os.environ.get("MONGO_DB_ATLAS_PASSWORD")
 	mongo_db_atlas_uri = f"mongodb+srv://wlurzuaProfesionalPortafolio:{password}@cluster0.oaoeslc.mongodb.net/?retryWrites=true&w=majority"
 	# Create a new client and connect to the server
-	mongo_client = MongoClient(mongo_db_atlas_uri, server_api=ServerApi('1'))
-	mongo_db = mongo_client["ColeccionistaCluster"]
+	mongo_db = MongoClient(mongo_db_atlas_uri, server_api=ServerApi('1')).ColeccionistaCluster
+	# mongo_db = mongo_client["ColeccionistaCluster"]
 	# test
 	@router.get("/get/prod")
 	async def get_prod():
