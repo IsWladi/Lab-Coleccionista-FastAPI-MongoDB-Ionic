@@ -20,3 +20,6 @@ jobs:
           project_id: ${{ secrets.PROJECT_ID }}
           space_push: true
           list_on_discovery: true
+
+      - name: print space file
+        run: cat Spacefile

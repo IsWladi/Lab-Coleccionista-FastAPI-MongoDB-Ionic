@@ -1,6 +1,7 @@
 # This api will be requested by the ionic app
 from fastapi import HTTPException, APIRouter
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 from bson import ObjectId
 from bson.json_util import dumps
 import json
@@ -22,8 +23,13 @@ router = APIRouter(prefix="/api/users", tags=["Users"])
 if os.environ.get("PRODUCTION") == "True":
 	password = os.environ.get("MONGO_DB_ATLAS_PASSWORD")
 	mongo_db_atlas_uri = f"mongodb+srv://wlurzuaProfesionalPortafolio:{password}@cluster0.oaoeslc.mongodb.net/?retryWrites=true&w=majority"
-	mongo_client = MongoClient(mongo_db_atlas_uri)
+	# Create a new client and connect to the server
+	mongo_client = MongoClient(mongo_db_atlas_uri, server_api=ServerApi('1'))
 	mongo_db = mongo_client["ColeccionistaCluster"]
+	# test
+	@app.get("/get/prod")
+	async def get_prod():
+		return "password: " + password
 else:
 	# Configurar las credenciales de autenticación de la BDD
 	username = "admin"
