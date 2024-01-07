@@ -23,7 +23,7 @@ if os.environ.get("PRODUCTION") == "True":
 	password = os.environ.get("MONGO_DB_ATLAS_PASSWORD")
 	mongo_db_atlas_uri = f"mongodb+srv://wlurzuaProfesionalPortafolio:{password}@cluster0.oaoeslc.mongodb.net/?retryWrites=true&w=majority"
 	mongo_client = MongoClient(mongo_db_atlas_uri)
-	mongo_db = mongo_client["Cluster0"]
+	mongo_db = mongo_client["ColeccionistaCluster"]
 else:
 	# Configurar las credenciales de autenticación de la BDD
 	username = "admin"
