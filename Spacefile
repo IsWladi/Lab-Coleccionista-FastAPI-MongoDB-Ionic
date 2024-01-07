@@ -14,3 +14,6 @@ micros:
         - name: MONGO_DB_ATLAS_PASSWORD
           description: password for the mongo db atlas
           default: "MONGO_DB_ATLAS_PASSWORD_VALUE"
+        - name: MONGO_DB_ATLAS_URI
+          description: uri for the mongo db atlas
+          default: "MONGO_DB_ATLAS_URI_VALUE"
