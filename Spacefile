@@ -6,3 +6,8 @@ micros:
     engine: python3.9
     primary: true
     run: uvicorn app.main:app
+    presets:
+      env:
+        - name: PRODUCTION
+          description: is for the github action to know if it is in production or not
+          default: "True"
