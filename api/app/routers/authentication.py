@@ -1,10 +1,12 @@
 # This api will be requested by the ionic app
 from fastapi import HTTPException, APIRouter
-from pymongo import MongoClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 from bson import ObjectId
 from bson.json_util import dumps
 import json
 import bcrypt
+import os
 
 # para definir el modelo de datos(body de la peticion)
 from pydantic import BaseModel
@@ -14,20 +16,31 @@ class UserRegistration(BaseModel):
     username: str
     password: str
 
-# Configurar las credenciales de autenticación
-username = "admin"
-password = "myPassword123"
-# Crear una instancia del cliente de MongoDB
-mongo_client = MongoClient("mongodb://coleccionista-bd-test:27017/",
-                           username=username,
-                           password=password)
 
-# Obtener una referencia a la base de datos
-mongo_db = mongo_client["coleccionista-bd-test"]
+
+router = APIRouter(prefix="/api/authentication", tags=["Authentication and Authorization"])
+
+# The environment variable PRODUCTION is set to True when the app is executed by github actions
+if os.environ.get("PRODUCTION") == "True":
+	password = os.environ.get("MONGO_DB_ATLAS_PASSWORD")
+	mongo_db_atlas_uri = f"mongodb+srv://wlurzuaProfesionalPortafolio:{password}@cluster0.oaoeslc.mongodb.net/?retryWrites=true&w=majority"
+	# Create a new client and connect to the server
+	mongo_db = MongoClient(mongo_db_atlas_uri, server_api=ServerApi('1')).ColeccionistaCluster
+
+else:
+	# Configurar las credenciales de autenticación de la BDD
+	username = "admin"
+	password = "myPassword123"
+
+	#Crear una instancia del cliente de MongoDB
+	mongo_client = MongoClient("mongodb://coleccionista-bd-test:27017/",
+							   username=username,
+							   password=password)
+
+	# Obtener una referencia a la base de datos
+	mongo_db = mongo_client["coleccionista-bd-test"]
 
 usuarios_collection = mongo_db["usuarios"]
-
-router = APIRouter(prefix="/api/users", tags=["Users"])
 
 @router.get("/get/{setting}")
 async def get_user(setting: str):

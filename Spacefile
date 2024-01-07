@@ -1,0 +1,16 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: api
+    src: api
+    engine: python3.9
+    primary: true
+    run: uvicorn app.main:app
+    presets:
+      env:
+        - name: PRODUCTION
+          description: is for the github action to know if it is in production or not
+          default: "True"
+        - name: MONGO_DB_ATLAS_PASSWORD
+          description: password for the mongo db atlas
+          default: "MONGO_DB_ATLAS_PASSWORD_VALUE"
