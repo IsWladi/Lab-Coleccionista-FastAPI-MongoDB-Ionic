@@ -18,18 +18,15 @@ class UserRegistration(BaseModel):
 
 
 
-router = APIRouter(prefix="/api/users", tags=["Users"])
+router = APIRouter(prefix="/api/authentication", tags=["Authentication and Authorization"])
 
+# The environment variable PRODUCTION is set to True when the app is executed by github actions
 if os.environ.get("PRODUCTION") == "True":
 	password = os.environ.get("MONGO_DB_ATLAS_PASSWORD")
 	mongo_db_atlas_uri = f"mongodb+srv://wlurzuaProfesionalPortafolio:{password}@cluster0.oaoeslc.mongodb.net/?retryWrites=true&w=majority"
 	# Create a new client and connect to the server
 	mongo_db = MongoClient(mongo_db_atlas_uri, server_api=ServerApi('1')).ColeccionistaCluster
-	# mongo_db = mongo_client["ColeccionistaCluster"]
-	# test
-	@router.get("/get/prod")
-	async def get_prod():
-		return "password: " + password
+
 else:
 	# Configurar las credenciales de autenticación de la BDD
 	username = "admin"
@@ -44,10 +41,6 @@ else:
 	mongo_db = mongo_client["coleccionista-bd-test"]
 
 usuarios_collection = mongo_db["usuarios"]
-
-@router.get("/get/hello")
-async def get_hello():
-	return "Hello world!"
 
 @router.get("/get/{setting}")
 async def get_user(setting: str):
