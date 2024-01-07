@@ -20,7 +20,7 @@ jobs:
 
       - name: Set up uri
         run: |
-          sed -i 's/MONGO_DB_ATLAS_URI_VALUE/'"$MONGO_URI"'/' Spacefile
+          sed -i 's|MONGO_DB_ATLAS_URI_VALUE|'"$MONGO_URI"'|' Spacefile
 
       - name: Deta Space Deployment Github Action
         uses: neobrains/space-deployment-github-action@v0.5
