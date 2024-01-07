@@ -4,14 +4,15 @@ on:
     branches:
       - dev
 
+env:
+  MONGO_PASSWORD: ${{ secrets.MONGO_DB_ATLAS_PASSWORD }}
+
 jobs:
   push-to-space:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Set up Spacefile
-        env:
-          MONGO_PASSWORD: ${{ secrets.MONGO_DB_ATLAS_PASSWORD }}
         run: |
           sed -i 's/MONGO_DB_ATLAS_PASSWORD_VALUE/${{ MONGO_PASSWORD }}/' Spacefile
 
@@ -26,10 +27,10 @@ jobs:
       - name: print space file
         run: cat Spacefile
 
-      - name: print secret password
-        env:
-          MONGO_PASSWORD: ${{ secrets.MONGO_DB_ATLAS_PASSWORD }}
-        run: |
-          echo ${{ secrets.MONGO_DB_ATLAS_PASSWORD }} &&
-          echo ${{ MONGO_PASSWORD }}
-
+      # - name: print secret password
+      #   env:
+      #     MONGO_PASSWORD: ${{ secrets.MONGO_DB_ATLAS_PASSWORD }}
+      #   run: |
+      #     echo ${{ secrets.MONGO_DB_ATLAS_PASSWORD }} &&
+      #     echo ${{ MONGO_PASSWORD }}
+      #
