@@ -2,7 +2,7 @@
 v: 0
 micros:
   - name: api
-    src: api/app
+    src: api
     engine: python3.9
     primary: true
-    run: uvicorn main:app
+    run: uvicorn app.main:app
