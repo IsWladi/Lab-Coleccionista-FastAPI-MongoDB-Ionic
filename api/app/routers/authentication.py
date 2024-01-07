@@ -27,7 +27,7 @@ if os.environ.get("PRODUCTION") == "True":
 	mongo_client = MongoClient(mongo_db_atlas_uri, server_api=ServerApi('1'))
 	mongo_db = mongo_client["ColeccionistaCluster"]
 	# test
-	@app.get("/get/prod")
+	@router.get("/get/prod")
 	async def get_prod():
 		return "password: " + password
 else:
