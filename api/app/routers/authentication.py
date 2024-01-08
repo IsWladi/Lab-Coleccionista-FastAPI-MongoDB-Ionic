@@ -22,11 +22,7 @@ router = APIRouter(prefix="/api/authentication", tags=["Authentication and Autho
 
 # The environment variable PRODUCTION is set to True when the app is executed by github actions
 if os.environ.get("PRODUCTION") == "True":
-	password = os.environ.get("MONGO_DB_ATLAS_PASSWORD")
-	uri = os.environ.get("MONGO_DB_ATLAS_URI")
-	#replace uri: <password> with the password
-	mongo_db_atlas_uri = uri.replace("<password>", password)
-	# Create a new client and connect to the server
+	mongo_db_atlas_uri = os.environ.get("MONGO_DB_ATLAS_URI")
 	mongo_db = MongoClient(mongo_db_atlas_uri, server_api=ServerApi('1')).ColeccionistaCluster
 
 else:
