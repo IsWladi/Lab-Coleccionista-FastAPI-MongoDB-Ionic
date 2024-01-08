@@ -6,5 +6,10 @@
 # Notes:
 - Check if it's necessary to replace bcrypt with argon2-cffi.
 
+# Secrets
+- ACCESS_TOKEN
+- PROJECT_ID
+- URI_MONGO_DB
+
 # Published API:
 [Deta Space](https://lab_portafolio-1-k1767315.deta.app/)
