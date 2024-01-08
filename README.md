@@ -7,9 +7,12 @@
 - Check if it's necessary to replace bcrypt with argon2-cffi.
 
 # Secrets
-- ACCESS_TOKEN
-- PROJECT_ID
-- URI_MONGO_DB
+- ACCESS_TOKEN: `deta access token`
+- PROJECT_ID: `deta project id`
+- URI_MONGO_DB: `mongo db uri db connection`
+
+# Notes
+- If I´ve updated the secrets, I need to update the environment variables in the Deta Space because they are not updated automatically.
 
 # Published API:
 [Deta Space](https://lab_portafolio-1-k1767315.deta.app/)
