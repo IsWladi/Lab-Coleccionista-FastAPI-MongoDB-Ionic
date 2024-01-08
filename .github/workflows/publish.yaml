@@ -5,7 +5,6 @@ on:
       - main
 
 env:
-  MONGO_PASSWORD: ${{ secrets.MONGO_DB_ATLAS_PASSWORD }}
   MONGO_URI: ${{ secrets.URI_MONGO_DB }}
 
 jobs:
@@ -13,12 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up password # Replace MONGO_DB_ATLAS_PASSWORD_VALUE with the password value
-        run: |
-          sed -i 's/MONGO_DB_ATLAS_PASSWORD_VALUE/'"$MONGO_PASSWORD"'/' Spacefile
 
-
-      - name: Set up uri
+      - name: Set up Spacefile #Replace MONGO_DB_ATLAS_URI_VALUE with MONGO_URI (from secrets, the uri must contain the password)
         run: |
           sed -i 's|MONGO_DB_ATLAS_URI_VALUE|'"$MONGO_URI"'|' Spacefile
 
