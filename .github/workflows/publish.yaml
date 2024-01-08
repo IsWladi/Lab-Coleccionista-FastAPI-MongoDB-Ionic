@@ -1,8 +1,9 @@
 name: Push to Space
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
+# on:
+#   push:
+#     branches:
+#       - main
 
 env:
   MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}

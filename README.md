@@ -9,10 +9,12 @@
 # Secrets
 - ACCESS_TOKEN: `deta access token`
 - PROJECT_ID: `deta project id`
-- URI_MONGO_DB: `mongo db uri db connection`
+- MONGO_USERNAME: `mongo username`
+- MONGO_PASSWORD: `mongo password`
+- MONGO_CLUSTER: `mongo cluster`
 
 # Notes
-- If I´ve updated the secrets, I need to update the environment variables in the Deta Space because they are not updated automatically.
+- If I´ve updated the repository secrets, I need to update the environment variables in the Deta Space because they are not updated automatically.
 
 # Published API:
 [Deta Space](https://lab_portafolio-1-k1767315.deta.app/)
