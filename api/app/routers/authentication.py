@@ -22,12 +22,12 @@ router = APIRouter(prefix="/api/authentication", tags=["Authentication and Autho
 
 # The environment variable PRODUCTION is set to True when the app is executed by github actions
 if os.environ.get("PRODUCTION") == "True":
-	uri = os.environ.get("MONGO_DB_ATLAS_URI")
+	mongo_username = os.environ.get("MONGO_USERNAME")
+	mongo_password = os.environ.get("MONGO_PASSWORD")
+	mongo_cluster = os.environ.get("MONGO_CLUSTER")
+	uri = f"mongodb+srv://{mongo_username}:{mongo_password}@{mongo_cluster}/?retryWrites=true&w=majority"
 	mongo_db = MongoClient(uri, server_api=ServerApi('1')).ColeccionistaCluster
 	# print for debugging
-	print("uri: ", uri)
-	print("mongo_db: ", mongo_db)
-	print("DEBUGGING --PRODUCTION-- (authentication.py)")
 
 else:
 	# Configurar las credenciales de autenticación de la BDD

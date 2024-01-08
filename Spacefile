@@ -11,6 +11,12 @@ micros:
         - name: PRODUCTION
           description: is for the github action to know if it is in production or not
           default: "True"
-        - name: MONGO_DB_ATLAS_URI
-          description: uri for the mongo db atlas
-          default: "MONGO_DB_ATLAS_URI_VALUE"
+        - name: MONGO_USERNAME
+          description: username for mongo
+          default: "MONGO_USERNAME_VALUE"
+        - name: MONGO_PASSWORD
+          description: password for mongo
+          default: "MONGO_PASSWORD_VALUE"
+        - name: MONGO_CLUSTER
+          description: cluster for mongo
+          default: "MONGO_CLUSTER_VALUE"

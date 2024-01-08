@@ -5,7 +5,9 @@ on:
       - main
 
 env:
-  MONGO_URI: ${{ secrets.URI_MONGO_DB }}
+  MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+  MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+  MONGO_CLUSTER: ${{ secrets.MONGO_CLUSTER }}
 
 jobs:
   push-to-space:
@@ -13,9 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Spacefile #Replace MONGO_DB_ATLAS_URI_VALUE with MONGO_URI (from secrets, the uri must contain the password)
+      - name: Set up Spacefile
         run: |
-          sed -i 's|MONGO_DB_ATLAS_URI_VALUE|'"$MONGO_URI"'|' Spacefile
+          sed -i 's|MONGO_USERNAME_VALUE|'"$MONGO_USERNAME"'|' Spacefile |
+          sed -i 's|MONGO_PASSWORD_VALUE|'"$MONGO_PASSWORD"'|' Spacefile |
+          sed -i 's|MONGO_CLUSTER_VALUE|'"$MONGO_CLUSTER"'|' Spacefile
 
       - name: Deta Space Deployment Github Action
         uses: neobrains/space-deployment-github-action@v0.5
