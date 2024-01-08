@@ -2,7 +2,7 @@ import os
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-def get_database() -> mongo_db:
+def get_database():
 	mongo_db = None
 	# The environment variable PRODUCTION is set to True when the app is executed by github actions
 	if os.environ.get("PRODUCTION") == "True":
