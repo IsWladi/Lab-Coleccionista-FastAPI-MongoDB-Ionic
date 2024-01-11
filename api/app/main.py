@@ -6,7 +6,7 @@ import os
 app = FastAPI()
 
 # routers
-app.include_router(authentication.router)
+# app.include_router(authentication.router)
 
 
 @app.get("/")

@@ -1,15 +1,14 @@
 services:
   db:
-    image: mongo:7.0.4-jammy
-    container_name: coleccionista-bd-test
+    image: container-registry.oracle.com/database/express:21.3.0-xe
+    container_name: coleccionista-bd-oracle-test
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=myPassword123
+      - ORACLE_PWD=myPassword123
     ports:
-      - 27017:27017
+      - 1521:1521
+      - 5500:5500
     volumes:
-      - mongodb_Coleccionista:/data/db
-      - mongodb_config_Coleccionista:/data/configdb
+      - oracle_db_volume:/opt/oracle/oradata
     networks:
       - Coleccionista_net
 
@@ -30,5 +29,4 @@ services:
 networks:
   Coleccionista_net:
 volumes:
-  mongodb_Coleccionista:
-  mongodb_config_Coleccionista:
+  oracle_db_volume:
