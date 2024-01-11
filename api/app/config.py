@@ -1,34 +1,44 @@
 import os
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+import oracledb
 
-def get_database(database_name = "mongodb"):
-	if database_name == "mongodb":
-		mongo_db = None
-		# The environment variable PRODUCTION is set to True when the app is executed by github actions
-		if os.environ.get("PRODUCTION") == "True":
-			mongo_username = os.environ.get("MONGO_USERNAME")
-			mongo_password = os.environ.get("MONGO_PASSWORD")
-			mongo_cluster = os.environ.get("MONGO_CLUSTER")
-			uri = f"mongodb+srv://{mongo_username}:{mongo_password}@{mongo_cluster}/?retryWrites=true&w=majority"
-			mongo_db = MongoClient(uri, server_api=ServerApi('1')).ColeccionistaCluster
-			# print for debugging
+def get_database_cursor():
+	# if $PRODUCTION == "True" conect to oracle cloud, else connect to local database within docker container
+	if os.environ.get("PRODUCTION") == "True":
+		# Connect to Oracle Cloud
+		return {error: "Not implemented yet"}
 
-		else:
-			# Configurar las credenciales de autenticación de la BDD
-			username = "admin"
-			password = "myPassword123"
-
-			#Crear una instancia del cliente de MongoDB
-			mongo_client = MongoClient("mongodb://coleccionista-bd-test:27017/",
-								 username=username,
-								 password=password)
-
-			# Obtener una referencia a la base de datos
-			mongo_db = mongo_client["coleccionista-bd-test"]
-
-		return mongo_db
-	elif database_name == "oracle":
-		return True
 	else:
-		return False
+		# Connect to local database within docker container
+		local_password = "myPassword123"
+
+		connection = oracledb.connect(
+			user="system",
+			password=local_password,
+			dsn="coleccionista-bd-oracle-test:1521/xe")
+
+		print("Successfully connected to Oracle Database")
+
+		cursor = connection.cursor()
+
+		# Create a table for users if it doesn't exist
+
+		# cursor.execute("""
+		# 	DECLARE
+		# 	  table_exists INTEGER;
+		# 	BEGIN
+		# 	  SELECT COUNT(*)
+		# 	  INTO table_exists
+		# 	  FROM user_tables
+		# 	  WHERE table_name = 'USERS';
+		#
+		# 	  IF table_exists = 0 THEN
+		# 		EXECUTE IMMEDIATE 'CREATE TABLE users (
+		# 		  username VARCHAR2(20),
+		# 		  password VARCHAR2(4000),
+		# 		  PRIMARY KEY (username)
+		# 		)';
+		# 	  END IF;
+		# 	END;""")
+
+		return cursor
+
