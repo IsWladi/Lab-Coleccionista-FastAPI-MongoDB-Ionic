@@ -6,7 +6,7 @@ import os
 app = FastAPI()
 
 # routers
-#app.include_router(authentication.router)
+app.include_router(authentication.router)
 
 
 @app.get("/")
@@ -18,4 +18,3 @@ def get_state_prod_or_develop():
 		return {"State": "Production"}
 	else:
  		return {"State": "Development"}
-

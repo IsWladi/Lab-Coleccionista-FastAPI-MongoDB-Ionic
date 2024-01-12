@@ -1,7 +1,7 @@
 import os
 import oracledb
 
-def get_database_cursor():
+def get_database():
 	# if $PRODUCTION == "True" conect to oracle cloud, else connect to local database within docker container
 	if os.environ.get("PRODUCTION") == "True":
 		# Connect to Oracle Cloud
@@ -22,23 +22,23 @@ def get_database_cursor():
 
 		# Create a table for users if it doesn't exist
 
-		# cursor.execute("""
-		# 	DECLARE
-		# 	  table_exists INTEGER;
-		# 	BEGIN
-		# 	  SELECT COUNT(*)
-		# 	  INTO table_exists
-		# 	  FROM user_tables
-		# 	  WHERE table_name = 'USERS';
-		#
-		# 	  IF table_exists = 0 THEN
-		# 		EXECUTE IMMEDIATE 'CREATE TABLE users (
-		# 		  username VARCHAR2(20),
-		# 		  password VARCHAR2(4000),
-		# 		  PRIMARY KEY (username)
-		# 		)';
-		# 	  END IF;
-		# 	END;""")
+		cursor.execute("""
+			DECLARE
+			  table_exists INTEGER;
+			BEGIN
+			  SELECT COUNT(*)
+			  INTO table_exists
+			  FROM user_tables
+			  WHERE table_name = 'USERS';
 
-		return cursor
+			  IF table_exists = 0 THEN
+				EXECUTE IMMEDIATE 'CREATE TABLE users (
+				  username VARCHAR2(20),
+				  password VARCHAR2(4000),
+				  PRIMARY KEY (username)
+				)';
+			  END IF;
+			END;""")
+
+		return [connection, cursor]
 
