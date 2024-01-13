@@ -2,7 +2,7 @@
 from fastapi import HTTPException, APIRouter
 import bcrypt
 import os
-from app.config import get_database
+from app.config import init_pool, DatabaseSettings
 # para definir el modelo de datos(body de la peticion)
 from pydantic import BaseModel
 
@@ -13,20 +13,25 @@ class UserRegistration(BaseModel):
 
 
 router = APIRouter(prefix="/api/authentication", tags=["Authentication and Authorization"])
-
-database_connection, database_cursor = get_database()
+pool = init_pool()
 
 @router.get("/get/user/{username}")
 async def get_user(username: str):
-	return database_cursor.execute(f"SELECT * FROM users WHERE username='{username}'")
+	with pool.acquire() as connection:
+		with connection.cursor() as cursor:
+			cursor.execute("select * from users where username = :username", username=username)
+			result = cursor.fetchone()
+			return { "username":result[0] }
 
+@router.get("/development-only/get/enum")
+async def get_enum_development_only():
+	"""Returns the database settings as an enum - DEVELOPMENT ONLY"""
+	return {
+		"db_password": DatabaseSettings.DB_PASSWORD.value,
+		"db_dsn": DatabaseSettings.DB_DSN.value,
+		"db_user": DatabaseSettings.DB_USER.value,
+		"min_pool": DatabaseSettings.MIN_POOL.value,
+		"max_pool": DatabaseSettings.MAX_POOL.value,
+		"pool_increment": DatabaseSettings.POOL_INCREMENT.value
+	}
 
-@router.get("/get/all/users")
-async def get_all_users():
-	return database_cursor.execute(f"SELECT *  FROM users")
-
-@router.get("/insert/user/{username}/{password}")
-async def insert_user(username: str, password: str):
-	insert = database_cursor.execute(f"INSERT INTO users VALUES ('{username}', '{password}')")
-	print (database_cursor.rowcount, "rows inserted")
-	database_connection.commit()

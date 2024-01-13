@@ -1,44 +1,22 @@
 import os
 import oracledb
+from enum import Enum
 
-def get_database():
-	# if $PRODUCTION == "True" conect to oracle cloud, else connect to local database within docker container
-	if os.environ.get("PRODUCTION") == "True":
-		# Connect to Oracle Cloud
-		return {error: "Not implemented yet"}
+# Database settings
+class DatabaseSettings(Enum):
+	DB_PASSWORD = os.environ.get("ORACLE_CLOUD_PASSWORD") or "myPassword123"
+	DB_DSN = os.environ.get("ORACLE_CLOUD_DSN") or "coleccionista-bd-oracle-test:1521/xe"
+	DB_USER = os.environ.get("ORACLE_CLOUD_USER") or "system"
+	MIN_POOL = 2 if os.environ.get("PRODUCTION") == "True" else 1
+	MAX_POOL = 5 if os.environ.get("PRODUCTION") == "True" else 1
+	POOL_INCREMENT = 1 if os.environ.get("PRODUCTION") == "True" else 0
 
-	else:
-		# Connect to local database within docker container
-		local_password = "myPassword123"
-
-		connection = oracledb.connect(
-			user="system",
-			password=local_password,
-			dsn="coleccionista-bd-oracle-test:1521/xe")
-
-		print("Successfully connected to Oracle Database")
-
-		cursor = connection.cursor()
-
-		# Create a table for users if it doesn't exist
-
-		cursor.execute("""
-			DECLARE
-			  table_exists INTEGER;
-			BEGIN
-			  SELECT COUNT(*)
-			  INTO table_exists
-			  FROM user_tables
-			  WHERE table_name = 'USERS';
-
-			  IF table_exists = 0 THEN
-				EXECUTE IMMEDIATE 'CREATE TABLE users (
-				  username VARCHAR2(20),
-				  password VARCHAR2(4000),
-				  PRIMARY KEY (username)
-				)';
-			  END IF;
-			END;""")
-
-		return [connection, cursor]
+def init_pool():
+	pool = oracledb.create_pool( user=DatabaseSettings.DB_USER.value,
+								 password=DatabaseSettings.DB_PASSWORD.value,
+								 dsn=DatabaseSettings.DB_DSN.value,
+								 min=DatabaseSettings.MIN_POOL.value,
+								 max=DatabaseSettings.MAX_POOL.value,
+							     increment=DatabaseSettings.POOL_INCREMENT.value)
+	return pool
 
