@@ -4,9 +4,9 @@ from enum import Enum
 
 # Database settings
 class DatabaseSettings(Enum):
-	DB_PASSWORD = os.environ.get("ORACLE_CLOUD_PASSWORD") or "myPassword123"
 	DB_DSN = os.environ.get("ORACLE_CLOUD_DSN") or "coleccionista-bd-oracle-test:1521/xe"
 	DB_USER = os.environ.get("ORACLE_CLOUD_USER") or "system"
+	DB_PASSWORD = os.environ.get("ORACLE_CLOUD_PASSWORD") or "myPassword123"
 	MIN_POOL = 2 if os.environ.get("PRODUCTION") == "True" else 1
 	MAX_POOL = 5 if os.environ.get("PRODUCTION") == "True" else 1
 	POOL_INCREMENT = 1 if os.environ.get("PRODUCTION") == "True" else 0
