@@ -25,6 +25,13 @@
 - Use the example below (the password is defined in the compose.yaml file):
   ![image](https://github.com/IsWladi/Lab-Ionic-FastAPI-MongoDB/assets/133131317/458c3c71-6645-4d8d-a9c4-ec5d70bf7e3b)
 
+# How to manage the containers
+- Execute `docker compose stop` at the root of the project to stop the containers.
+- Execute `docker compose start` at the root of the project to start the containers.
+- Note:
+    * If you want to restart the containers, avoid using `docker compose restart` because by default the database is started after the API. Instead, use `docker compose stop` and then `docker compose start`.
+    * The API container has hot reload enabled, so you don't need to restart it when you make changes to the code.
+
 # How to run the tests
 - When the containers are running, execute `docker exec -it coleccionista-api-test bash` to enter the container.
 - Once inside the container:
