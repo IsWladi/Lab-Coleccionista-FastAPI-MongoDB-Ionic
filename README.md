@@ -19,7 +19,9 @@
 
 ## Run Docker Containers
 - Execute `docker compose up -d` at the root of the project (if you encounter an error about the compose command, try with `docker-compose up -d`, as this may occur with older versions of Docker).
+- When finished, navegate to `localhost:8000/docs` to view the api documentation
 - Note: The wait time for the command to complete may exceed 5 minutes as it involves downloading the Oracle database. Additionally, the API container will wait until the database is in a healthy state before receiving connections, ensuring that the API functions correctly.
+
 
 ## Connect to the Database via SQL Developer
 - Use the example below (the password is defined in the compose.yaml file):
