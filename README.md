@@ -19,15 +19,17 @@
 
 ## Run Docker Containers
 - Execute `docker compose up -d` at the root of the project (if you encounter an error about the compose command, try with `docker-compose up -d`, as this may occur with older versions of Docker).
-- Note: The wait for the command's end may be longer than 5 minutes because it is going to download the Oracle database.
+- When finished, navegate to `localhost:8000/docs` to view the api documentation
+- Note: The wait time for the command to complete may exceed 5 minutes as it involves downloading the Oracle database. Additionally, the API container will wait until the database is in a healthy state before receiving connections, ensuring that the API functions correctly.
+
 
 ## Connect to the Database via SQL Developer
 - Use the example below (the password is defined in the compose.yaml file):
   ![image](https://github.com/IsWladi/Lab-Ionic-FastAPI-MongoDB/assets/133131317/458c3c71-6645-4d8d-a9c4-ec5d70bf7e3b)
 
 # How to manage the containers
-- Execute `docker compose stop` at the root of the project to stop the containers.
 - Execute `docker compose start` at the root of the project to start the containers.
+- Execute `docker compose stop` at the root of the project to stop the containers.
 - Note:
     * If you want to restart the containers, avoid using `docker compose restart` because by default the database is started after the API. Instead, use `docker compose stop` and then `docker compose start`.
     * The API container has hot reload enabled, so you don't need to restart it when you make changes to the code.
@@ -37,7 +39,7 @@
 - Once inside the container:
     - Execute `pytest` to run all the tests.
     - Execute `pytest -k <filename>.py` to run a specific test.
-    - To see the verbose output of the tests, add the `-v` or '-vv' flags to the previous commands.
+    - To see the verbose output of the tests, add the `-v` or `-vv` flags to the previous commands.
 
 
 # Documentation:
