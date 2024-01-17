@@ -4,3 +4,4 @@ bcrypt==4.1.2
 oracledb==2.0.1
 httpx # for use TestClient from fastapi
 pytest
+python-multipart

@@ -15,13 +15,11 @@
 ## Requirements
 - Docker and Docker Compose
 - [SQL Developer 23.1.0](https://www.oracle.com/tools/downloads/sqldev-downloads-23.1.0.html)
-- Ionic Framework v7.0.0:  `npm i -g @ionic/cli@7.0.0`
 
 ## Run Docker Containers
 - Execute `docker compose up -d` at the root of the project (if you encounter an error about the compose command, try with `docker-compose up -d`, as this may occur with older versions of Docker).
 - When finished, navegate to `localhost:8000/docs` to view the api documentation
 - Note: The wait time for the command to complete may exceed 5 minutes as it involves downloading the Oracle database. Additionally, the API container will wait until the database is in a healthy state before receiving connections, ensuring that the API functions correctly.
-
 
 ## Connect to the Database via SQL Developer
 - Use the example below (the password is defined in the compose.yaml file):
@@ -31,7 +29,7 @@
 - Execute `docker compose start` at the root of the project to start the containers.
 - Execute `docker compose stop` at the root of the project to stop the containers.
 - Note:
-    * If you want to restart the containers, avoid using `docker compose restart` because by default the database is started after the API. Instead, use `docker compose stop` and then `docker compose start`.
+    * If you want to restart the containers, avoid using `docker compose restart` because a bug cause that the database is started after the API. Instead, use `docker compose stop` and then `docker compose start`.
     * The API container has hot reload enabled, so you don't need to restart it when you make changes to the code.
 
 # How to run the tests
@@ -41,13 +39,13 @@
     - Execute `pytest -k <filename>.py` to run a specific test.
     - To see the verbose output of the tests, add the `-v` or `-vv` flags to the previous commands.
 
-
 # Documentation:
 - [FastAPI web](https://fastapi.tiangolo.com/)
-- [Run a Python App on DetaSpace](https://deta.space/docs/en/build/quick-starts/python/)
-- [GitHub Action for DetaSpace](https://github.com/marketplace/actions/deta-space-deployment-github-action)
-- [Setting Environment Variables within a Spacefile](https://deta.space/docs/en/build/fundamentals/the-space-runtime/configuration#environment-variables)
-- [Oracle Container Registry - Oracle Database XE Release 21c (21.3.0.0)](https://container-registry.oracle.com/ords/f?p=113:4:100485902704522:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&cs=3DDK2EFrARkHzaJP7vopfqmoDgt3IQ9zeD_aMJZhQdYo1nanPtxGMH5iJoA3VS5hyHGzfJtQeX4btShVmbP6vWA)
-- [SQL Developer 23.1.0](https://www.oracle.com/tools/downloads/sqldev-downloads-23.1.0.html)
-- [python - oracledb documentation](https://python-oracledb.readthedocs.io/en/latest/)
-- [How to mantain global pool connections in FastAPI](https://github.com/tiangolo/fastapi/issues/1800)
+- [FastAPI- How to mantain global pool connections](https://github.com/tiangolo/fastapi/issues/1800)
+- [FastAPI -Lifespan Events](https://fastapi.tiangolo.com/advanced/events/)
+- [Oracle - Oracle Container Registry - Oracle Database XE Release 21c (21.3.0.0)](https://container-registry.oracle.com/ords/f?p=113:4:100485902704522:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&cs=3DDK2EFrARkHzaJP7vopfqmoDgt3IQ9zeD_aMJZhQdYo1nanPtxGMH5iJoA3VS5hyHGzfJtQeX4btShVmbP6vWA)
+- [Oracle - SQL Developer 23.1.0](https://www.oracle.com/tools/downloads/sqldev-downloads-23.1.0.html)
+- [Python/Oracle - oracledb documentation](https://python-oracledb.readthedocs.io/en/latest/)
+- [DetaSpace - Run a Python App on DetaSpace](https://deta.space/docs/en/build/quick-starts/python/)
+- [DetaSpace - GitHub Action for DetaSpace](https://github.com/marketplace/actions/deta-space-deployment-github-action)
+- [DetaSpace - Setting Environment Variables within a Spacefile](https://deta.space/docs/en/build/fundamentals/the-space-runtime/configuration#environment-variables)

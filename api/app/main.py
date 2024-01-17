@@ -1,6 +1,6 @@
 # This api will be requested by the ionic app
 from fastapi import FastAPI, HTTPException, APIRouter
-from .routers import users
+from .routers import users, basic_auth
 from .config import init_pool
 from contextlib import asynccontextmanager
 import os
@@ -15,11 +15,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
-
 # routers
 app.include_router(users.router)
-
-
+app.include_router(basic_auth.router)
 
 @app.get("/")
 def get_state_prod_or_develop():
