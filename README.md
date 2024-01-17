@@ -40,12 +40,24 @@
     - To see the verbose output of the tests, add the `-v` or `-vv` flags to the previous commands.
 
 # Documentation:
-- [FastAPI web](https://fastapi.tiangolo.com/)
-- [FastAPI- How to mantain global pool connections](https://github.com/tiangolo/fastapi/issues/1800)
-- [FastAPI -Lifespan Events](https://fastapi.tiangolo.com/advanced/events/)
+
+## API
+- [FastAPI - web](https://fastapi.tiangolo.com/)
+- [FastAPI - How to mantain global pool connections](https://github.com/tiangolo/fastapi/issues/1800)
+- [FastAPI - Lifespan Events](https://fastapi.tiangolo.com/advanced/events/)
+- [FastAPI - Simple OAuth2 with Password and Bearer](https://fastapi.tiangolo.com/tutorial/security/simple-oauth2/)
+
+## Database
 - [Oracle - Oracle Container Registry - Oracle Database XE Release 21c (21.3.0.0)](https://container-registry.oracle.com/ords/f?p=113:4:100485902704522:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&cs=3DDK2EFrARkHzaJP7vopfqmoDgt3IQ9zeD_aMJZhQdYo1nanPtxGMH5iJoA3VS5hyHGzfJtQeX4btShVmbP6vWA)
 - [Oracle - SQL Developer 23.1.0](https://www.oracle.com/tools/downloads/sqldev-downloads-23.1.0.html)
 - [Python/Oracle - oracledb documentation](https://python-oracledb.readthedocs.io/en/latest/)
+
+## Deployment
 - [DetaSpace - Run a Python App on DetaSpace](https://deta.space/docs/en/build/quick-starts/python/)
 - [DetaSpace - GitHub Action for DetaSpace](https://github.com/marketplace/actions/deta-space-deployment-github-action)
 - [DetaSpace - Setting Environment Variables within a Spacefile](https://deta.space/docs/en/build/fundamentals/the-space-runtime/configuration#environment-variables)
+
+## Docker
+- [DockerHub - Python](https://hub.docker.com/_/python)
+- [Docker Compose - Healthcheck](https://docs.docker.com/compose/compose-file/compose-file-v3/#healthcheck)
+- [Docker Compose - Depends on (with or whitout condition)](https://docs.docker.com/compose/compose-file/05-services/#depends_on)
