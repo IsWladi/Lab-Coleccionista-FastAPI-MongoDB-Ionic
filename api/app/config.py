@@ -2,6 +2,13 @@ import os
 import oracledb
 from enum import Enum
 
+# Oauth2 settings
+class Oauth2Settings(Enum):
+	SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7" if os.environ.get("SECRET_KEY") is None else os.environ.get("SECRET_KEY")
+	ALGORITHM = "HS256"
+	ACCESS_TOKEN_EXPIRE_MINUTES = 0 if os.environ.get("PRODUCTION") == "True" else 1
+	ACCESS_TOKEN_EXPIRE_DAYS = 7 if os.environ.get("PRODUCTION") == "True" else 0
+
 # Database settings
 class DatabaseSettings(Enum):
 	DB_DSN = os.environ.get("ORACLE_CLOUD_DSN") or "coleccionista-bd-oracle-test:1521/xe"

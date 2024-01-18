@@ -6,6 +6,14 @@ import os
 #import models
 from app.models.users import UserRegistration
 
+
+# import the dependencies for validating the token
+from fastapi import Depends
+from app.dependencies import get_current_user
+from typing import Annotated
+from app.models.basic_auth_models import User
+auth_dependency = Annotated[User, Depends(get_current_user)] # for use: current_user: auth_dependency
+
 router = APIRouter(prefix="/api/users", tags=["Users"])
 
 @router.get("/get/{username}", status_code=200)
@@ -37,7 +45,7 @@ async def get_user(request: Request, username: str):
 
 
 @router.get("/get/all/users", status_code=200)
-async def get_all_users(request: Request):
+async def get_all_users(request: Request, current_user: auth_dependency):
 	"""
 	# Get all users
 

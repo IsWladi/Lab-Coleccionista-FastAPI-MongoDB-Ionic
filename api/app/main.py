@@ -5,6 +5,13 @@ from .config import init_pool
 from contextlib import asynccontextmanager
 import os
 
+# import the dependencies for validating the token
+from fastapi import Depends
+from app.dependencies import get_current_user
+from typing import Annotated
+from app.models.basic_auth_models import User
+auth_dependency = Annotated[User, Depends(get_current_user)] # for use: current_user: auth_dependency
+
 # database connection pool setup and shutdown in lifespan
 # the database connection pool can be used in routers with request.app.state.db_pool with the request: Request parameter
 @asynccontextmanager
@@ -28,3 +35,7 @@ def get_state_prod_or_develop():
 		return {"State": "Production"}
 	else:
  		return {"State": "Development"}
+
+@app.get("/users/me/items/")
+async def read_own_items(current_user: auth_dependency):
+    return [{"item_id": "Foo", "owner": current_user.username}]
