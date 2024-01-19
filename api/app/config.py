@@ -4,7 +4,7 @@ from enum import Enum
 
 # Oauth2 settings
 class Oauth2Settings(Enum):
-	SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7" if os.environ.get("SECRET_KEY") is None else os.environ.get("SECRET_KEY")
+	SECRET_KEY = "SUPER-SECRET-KEY-FOR-OAUTH2" if os.environ.get("SECRET_KEY_OAUTH2") is None else os.environ.get("SECRET_KEY_OAUTH2")
 	ALGORITHM = "HS256"
 	ACCESS_TOKEN_EXPIRE_MINUTES = 0 if os.environ.get("PRODUCTION") == "True" else 1
 	ACCESS_TOKEN_EXPIRE_DAYS = 7 if os.environ.get("PRODUCTION") == "True" else 0
@@ -18,6 +18,8 @@ class DatabaseSettings(Enum):
 	MAX_POOL = 5 if os.environ.get("PRODUCTION") == "True" else 1
 	POOL_INCREMENT = 1 if os.environ.get("PRODUCTION") == "True" else 0
 
+# Function to initialize the database connection pool at startup
+# It is called in the lifespan function in main.py
 def init_pool():
 	pool = oracledb.create_pool( user=DatabaseSettings.DB_USER.value,
 								 password=DatabaseSettings.DB_PASSWORD.value,

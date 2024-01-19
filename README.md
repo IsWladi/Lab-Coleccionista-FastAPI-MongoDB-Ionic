@@ -1,6 +1,19 @@
 # Lab-Coleccionista-FastAPI-Oracle
 **This repository is for experimentation only, for the study of the infrastructure and development cycle of the portfolio project for DuocUC.**
 
+## Table of contents
+* [Needed GitHub Repository Secrets](#needed-github-repository-secrets)
+* [Notes](#notes)
+* [Published API](#published-api)
+* [How to Run the Project Locally with Docker](#how-to-run-the-project-locally-with-docker)
+    * [Requirements](#requirements)
+    * [Run Docker Containers](#run-docker-containers)
+    * [Connect to the Database via SQL Developer](#connect-to-the-database-via-sql-developer)
+* [How to manage the containers](#how-to-manage-the-containers)
+* [How to run the tests](#how-to-run-the-tests)
+* [Project Structure](#project-structure)
+* [References](#references)
+
 # Needed Github Repository Secrets
 - As of now, there are no repository secrets for Oracle Database Cloud connections because, until now, a cloud database has not been available
 
@@ -8,8 +21,8 @@
 - Bug: If I've updated the repository secrets, I need to update the environment variables in Deta Space because they are not updated automatically.
 - Check if it's an improvement to replace bcrypt with argon2-cffi.
 
-# Published API ( as of now, only works with MongoDB Atlas):
-[Deta Space](https://lab_portafolio-1-k1767315.deta.app/)
+# Published API
+( as of now, there is no published API until I have an Oracle cloud database )
 
 # How to Run the Project Locally with Docker
 ## Requirements
@@ -39,13 +52,41 @@
     - Execute `pytest -k <filename>.py` to run a specific test.
     - To see the verbose output of the tests, add the `-v` or `-vv` flags to the previous commands.
 
-# Documentation:
+# Project Structure
+
+## Route: `./`
+- `.github/` - GitHub Actions workflows (CI/CD)
+- `api/` - API configuration files and source code
+- `.dockerignore` - Files to ignore when building the Docker images
+- `.gitignore` - Files to ignore when pushing to the repository
+- `.spaceignore` - Files to ignore when deploying to Deta Space
+-  `README.md` - Documentation of the project
+- `Spacefile` - Deta Space configuration file (for deployment)
+- `compose.yaml` - Docker Compose configuration file for local development (FastAPI + Oracle DB)
+
+## Route: `./api/`
+- `app/` - API source code (FastAPI)
+- `Dockerfile` - Docker configuration file for the FastAPI app
+- `requirements.txt` - Python dependencies for the FastAPI app
+
+## Route: `./api/app/`
+- `models/` - Pydantic models for be used in the endpoints
+- `routers/` - API source code for each set of endpoints ( for separation of concerns)
+- `tests/` - API tests (pytest)
+- `config.py` - Environment variables, database connection function, secrets, etc.
+- `dependencies.py` - Dependency injection for the endpoints
+- `main.py` - API main file ( app creation, routers addition, definition of the lifespan events, etc. )
+
+# References:
 
 ## API
+- [API - Project Documentation](./api/app/README.md)
 - [FastAPI - web](https://fastapi.tiangolo.com/)
 - [FastAPI - How to mantain global pool connections](https://github.com/tiangolo/fastapi/issues/1800)
 - [FastAPI - Lifespan Events](https://fastapi.tiangolo.com/advanced/events/)
 - [FastAPI - Simple OAuth2 with Password and Bearer](https://fastapi.tiangolo.com/tutorial/security/simple-oauth2/)
+- [FastAPI - OAuth2 with Password (and hashing), Bearer with JWT tokens](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/)
+- [FastAPI - Testing](https://fastapi.tiangolo.com/tutorial/testing/)
 
 ## Database
 - [Oracle - Oracle Container Registry - Oracle Database XE Release 21c (21.3.0.0)](https://container-registry.oracle.com/ords/f?p=113:4:100485902704522:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&cs=3DDK2EFrARkHzaJP7vopfqmoDgt3IQ9zeD_aMJZhQdYo1nanPtxGMH5iJoA3VS5hyHGzfJtQeX4btShVmbP6vWA)

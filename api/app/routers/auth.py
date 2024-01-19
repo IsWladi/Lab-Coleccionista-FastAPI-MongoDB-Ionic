@@ -16,9 +16,8 @@ ALGORITHM = Oauth2Settings.ALGORITHM.value
 SECRET_KEY = Oauth2Settings.SECRET_KEY.value
 ACCESS_TOKEN_EXPIRE_MINUTES = Oauth2Settings.ACCESS_TOKEN_EXPIRE_MINUTES.value
 
-router = APIRouter(prefix="/api/basic_auth", tags=["Basic Auth"])
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/basic_auth/token") # if there is a prefix in the router, it should be added here
-
+router = APIRouter(prefix="/api/auth", tags=["Basic Auth"])
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token") # if there is a prefix in the router, it should be added here
 
 # Verify if the username and password are correct and return the username if it is correct
 def authenticate_user(username: str, password: str, request: Request):
@@ -63,9 +62,3 @@ async def login(request: Request, form_data: Annotated[OAuth2PasswordRequestForm
     )
 	return Token(access_token=access_token, token_type="bearer")
 
-# route which requires authentication (test)
-# @router.get("/users/me/items/")
-# async def read_own_items(
-#     current_user: Annotated[User, Depends(get_current_user)]
-# ):
-#     return [{"item_id": "Foo", "owner": current_user.username}]
