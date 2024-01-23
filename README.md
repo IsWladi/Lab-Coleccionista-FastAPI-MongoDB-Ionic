@@ -95,6 +95,7 @@
 - [FastAPI - Simple OAuth2 with Password and Bearer](https://fastapi.tiangolo.com/tutorial/security/simple-oauth2/)
 - [FastAPI - OAuth2 with Password (and hashing), Bearer with JWT tokens](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/)
 - [FastAPI - Testing](https://fastapi.tiangolo.com/tutorial/testing/)
+- [FastAPI - Advanced testing, lifespan](https://fastapi.tiangolo.com/advanced/testing-events/#testing-events-startup-shutdown)
 
 ## Database
 - [Oracle - Oracle Container Registry - Oracle Database XE Release 21c (21.3.0.0)](https://container-registry.oracle.com/ords/f?p=113:4:8227059033940:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&cs=3UHW8565qyh-pcnTW8hJpndMMN-pfSM4R7K2Ym0DrVdyu1QIujgszQIXdX2SJ9sbj4tBMXfJtH9oqtBh917cpfw)

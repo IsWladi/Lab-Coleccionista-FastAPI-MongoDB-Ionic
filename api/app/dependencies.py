@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import HTTPException, Request, Depends
 from jose import JWTError, jwt
 from fastapi.security import OAuth2PasswordBearer
-from app.routers.basic_auth import  oauth2_scheme
+from app.routers.auth import  oauth2_scheme
 
 #import models
 from app.models.basic_auth_models import TokenData, User
