@@ -18,7 +18,7 @@ jobs:
         run: docker compose up -d
 
       - name: Run pytest
-        run: docker exec -it coleccionista-api-test pytest -vv
+        run: docker exec coleccionista-api-test pytest
 
 #################### EXAMPLE FOR REFERENCE ####################
 # name: cd
