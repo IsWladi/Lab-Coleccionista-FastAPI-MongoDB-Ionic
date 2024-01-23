@@ -1,29 +1,31 @@
 import os
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
+import oracledb
+from enum import Enum
 
-def get_database():
-	mongo_db = None
-	# The environment variable PRODUCTION is set to True when the app is executed by github actions
-	if os.environ.get("PRODUCTION") == "True":
-		mongo_username = os.environ.get("MONGO_USERNAME")
-		mongo_password = os.environ.get("MONGO_PASSWORD")
-		mongo_cluster = os.environ.get("MONGO_CLUSTER")
-		uri = f"mongodb+srv://{mongo_username}:{mongo_password}@{mongo_cluster}/?retryWrites=true&w=majority"
-		mongo_db = MongoClient(uri, server_api=ServerApi('1')).ColeccionistaCluster
-		# print for debugging
+# Oauth2 settings
+class Oauth2Settings(Enum):
+	SECRET_KEY = "SUPER-SECRET-KEY-FOR-OAUTH2" if os.environ.get("SECRET_KEY_OAUTH2") is None else os.environ.get("SECRET_KEY_OAUTH2")
+	ALGORITHM = "HS256"
+	ACCESS_TOKEN_EXPIRE_MINUTES = 0 if os.environ.get("PRODUCTION") == "True" else 1
+	ACCESS_TOKEN_EXPIRE_DAYS = 7 if os.environ.get("PRODUCTION") == "True" else 0
 
-	else:
-		# Configurar las credenciales de autenticación de la BDD
-		username = "admin"
-		password = "myPassword123"
+# Database settings
+class DatabaseSettings(Enum):
+	DB_DSN = os.environ.get("ORACLE_CLOUD_DSN") or "coleccionista-bd-oracle-test:1521/xe"
+	DB_USER = os.environ.get("ORACLE_CLOUD_USER") or "system"
+	DB_PASSWORD = os.environ.get("ORACLE_CLOUD_PASSWORD") or "myPassword123"
+	MIN_POOL = 2 if os.environ.get("PRODUCTION") == "True" else 1
+	MAX_POOL = 5 if os.environ.get("PRODUCTION") == "True" else 1
+	POOL_INCREMENT = 1 if os.environ.get("PRODUCTION") == "True" else 0
 
-		#Crear una instancia del cliente de MongoDB
-		mongo_client = MongoClient("mongodb://coleccionista-bd-test:27017/",
-								username=username,
-		password=password)
+# Function to initialize the database connection pool at startup
+# It is called in the lifespan function in main.py
+def init_pool():
+	pool = oracledb.create_pool( user=DatabaseSettings.DB_USER.value,
+								 password=DatabaseSettings.DB_PASSWORD.value,
+								 dsn=DatabaseSettings.DB_DSN.value,
+								 min=DatabaseSettings.MIN_POOL.value,
+								 max=DatabaseSettings.MAX_POOL.value,
+							     increment=DatabaseSettings.POOL_INCREMENT.value)
+	return pool
 
-		# Obtener una referencia a la base de datos
-		mongo_db = mongo_client["coleccionista-bd-test"]
-
-	return mongo_db
