@@ -2,9 +2,11 @@
 **This repository is for experimentation only, for the study of the infrastructure and development cycle of the portfolio project for DuocUC.**
 
 ## Table of contents
-* [Needed GitHub Repository Secrets](#needed-github-repository-secrets)
 * [Notes](#notes)
 * [Published API](#published-api)
+* [How to publish the API to DetaSpace](#how-to-publish-the-api-to-detaspace)
+    * [Needed GitHub Repository Secrets](#needed-github-repository-secrets)
+    * [Publish the API](#publish-the-api)
 * [How to Run the Project Locally with Docker](#how-to-run-the-project-locally-with-docker)
     * [Requirements](#requirements)
     * [Run Docker Containers](#run-docker-containers)
@@ -14,15 +16,21 @@
 * [Project Structure](#project-structure)
 * [References](#references)
 
-# Needed Github Repository Secrets
-- As of now, there are no repository secrets for Oracle Database Cloud connections because, until now, a cloud database has not been available
-
 # Notes
 - Bug: If I've updated the repository secrets, I need to update the environment variables in Deta Space because they are not updated automatically.
 - Check if it's an improvement to replace bcrypt with argon2-cffi.
 
 # Published API
 ( as of now, there is no published API until I have an Oracle cloud database )
+
+# How to publish the API to DetaSpace
+## Needed Github Repository Secrets
+- As of now, there are no repository secrets for Oracle Database Cloud connections because, until now, a cloud database has not been available
+
+## Publish the API
+- Make a pull request to the `main` branch:
+    - The GitHub Action will run the tests for being able to merge the pull request.
+    - When merged, the GitHub Action will publish the API to Deta Space.
 
 # How to Run the Project Locally with Docker
 ## Requirements
@@ -89,7 +97,7 @@
 - [FastAPI - Testing](https://fastapi.tiangolo.com/tutorial/testing/)
 
 ## Database
-- [Oracle - Oracle Container Registry - Oracle Database XE Release 21c (21.3.0.0)](https://container-registry.oracle.com/ords/f?p=113:4:100485902704522:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&cs=3DDK2EFrARkHzaJP7vopfqmoDgt3IQ9zeD_aMJZhQdYo1nanPtxGMH5iJoA3VS5hyHGzfJtQeX4btShVmbP6vWA)
+- [Oracle - Oracle Container Registry - Oracle Database XE Release 21c (21.3.0.0)](https://container-registry.oracle.com/ords/f?p=113:4:8227059033940:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&cs=3UHW8565qyh-pcnTW8hJpndMMN-pfSM4R7K2Ym0DrVdyu1QIujgszQIXdX2SJ9sbj4tBMXfJtH9oqtBh917cpfw)
 - [Oracle - SQL Developer 23.1.0](https://www.oracle.com/tools/downloads/sqldev-downloads-23.1.0.html)
 - [Python/Oracle - oracledb documentation](https://python-oracledb.readthedocs.io/en/latest/)
 
