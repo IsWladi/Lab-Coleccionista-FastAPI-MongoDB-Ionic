@@ -85,6 +85,7 @@
 - `models/` - Pydantic models for be used in the endpoints
 - `routers/` - API source code for each set of endpoints ( for separation of concerns)
 - `tests/` - API tests (pytest)
+- `README.md` - Specific documentation for the API (not as a replacement for the Swagger docs)
 - `config.py` - Environment variables, database connection function, secrets, etc.
 - `dependencies.py` - Dependency injection for the endpoints
 - `main.py` - API main file ( app creation, routers addition, definition of the lifespan events, etc. )
