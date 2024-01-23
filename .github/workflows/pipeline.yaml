@@ -1,8 +1,7 @@
 name: ci
 on:
   pull_request:
-    types:
-      - opened
+    types: [opened, edited]
     branches:
       - 'main'
     paths:

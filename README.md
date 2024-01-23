@@ -1,6 +1,10 @@
 # Lab-Coleccionista-FastAPI-Oracle
 **This repository is for experimentation only, for the study of the infrastructure and development cycle of the portfolio project for DuocUC.**
 
+# To Do
+- Insert fake data in the database for testing purposes when the containers are created.
+- Tests if a pull request is edited that the GitHub Action is triggered again.
+
 ## Table of contents
 * [Notes](#notes)
 * [Published API](#published-api)
