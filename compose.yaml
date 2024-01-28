@@ -35,16 +35,16 @@ services:
       - Coleccionista_net
 
   mobile:
-    container_name: web-ionic-api-test
-    build: ./collecti-mate
+    container_name: web-coleccionista-ionic
+    build: ./coleccti-mate
     command: ionic serve --host=0.0.0.0 --port=8100
     volumes:
-      - ./collecti-mate:/code/collecti-mate
+      - ./coleccti-mate:/code/coleccti-mate
     ports:
       - "8100:8100"
     depends_on:
       - api
-    working_dir: /code/collecti-mate
+    working_dir: /code/coleccti-mate
     networks:
       - Coleccionista_net
 
