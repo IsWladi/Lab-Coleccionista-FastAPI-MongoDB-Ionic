@@ -38,6 +38,22 @@
 
 # How to Run the Project Locally with Docker
 ## Requirements
+- Linux:
+    - [Docker engine (with docker compose)](https://docs.docker.com/engine/install/)
+- Windows:
+    - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+    - Manage docker in wsl2 distro terminal (Optional but recommended because it's faster and enable hot reload):
+        * After installing Docker Desktop, install a Linux distro with WSL2: [Tutorial](https://terminaldelinux.com/terminal/wsl/instalacion-wsl/)
+        * Enable Docker support in your WSL 2 distro: [Tutorial](https://docs.docker.com/desktop/wsl/#enabling-docker-support-in-wsl-2-distros)
+        * (optional) configure the WSL2 for comfortable development:
+            * [Set up WSL2](https://terminaldelinux.com/terminal/wsl/configuracion-wsl/)
+            * [Install zsh in WSL2 distro](https://terminaldelinux.com/terminal/preparacion-entorno/instalacion-zsh/)
+        * Notes:
+            * Clone the repository in the wsl2 distro filesystem, not in Windows filesystem.
+            * Manage the containers within the WSL2 distro, not in Windows.
+            * If you don´t want to edit the files in the WSL2 distro, you can edit them in Windows([editing the distro filesystem](https://terminaldelinux.com/terminal/wsl/configuracion-wsl/#acceder-a-linux-desde-windows)) and the changes will be reflected in the WSL2 distro filesystem.
+
+
 - Docker and Docker Compose
 - [SQL Developer 23.1.0](https://www.oracle.com/tools/downloads/sqldev-downloads-23.1.0.html)
 
@@ -116,3 +132,8 @@
 - [DockerHub - Python](https://hub.docker.com/_/python)
 - [Docker Compose - Healthcheck](https://docs.docker.com/compose/compose-file/compose-file-v3/#healthcheck)
 - [Docker Compose - Depends on (with or whitout condition)](https://docs.docker.com/compose/compose-file/05-services/#depends_on)
+- [Install WSL2 ](https://terminaldelinux.com/terminal/wsl/instalacion-wsl/)
+- [Set up WSL2 ](https://terminaldelinux.com/terminal/wsl/configuracion-wsl/)
+- [Install zsh in WSL2 distro](https://terminaldelinux.com/terminal/preparacion-entorno/instalacion-zsh/)
+- [Docker Desktop - Enable WSL2 ](https://docs.docker.com/desktop/wsl/)
+- [Enabling Docker support in WSL2 distros](https://docs.docker.com/desktop/wsl/#enabling-docker-support-in-wsl-2-distros)
