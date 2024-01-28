@@ -1,7 +1,0 @@
-{
-  "name": "CollectiMate",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react-vite"
-}
