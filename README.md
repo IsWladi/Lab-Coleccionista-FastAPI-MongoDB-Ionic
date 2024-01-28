@@ -53,8 +53,6 @@
             * Manage the containers within the WSL2 distro, not in Windows.
             * If you don´t want to edit the files in the WSL2 distro, you can edit them in Windows([editing the distro filesystem](https://terminaldelinux.com/terminal/wsl/configuracion-wsl/#acceder-a-linux-desde-windows)) and the changes will be reflected in the WSL2 distro filesystem.
 
-
-- Docker and Docker Compose
 - [SQL Developer 23.1.0](https://www.oracle.com/tools/downloads/sqldev-downloads-23.1.0.html)
 
 ## Run Docker Containers
