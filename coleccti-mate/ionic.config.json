@@ -1,0 +1,7 @@
+{
+  "name": "coleccti-mate",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
