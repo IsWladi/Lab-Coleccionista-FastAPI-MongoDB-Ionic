@@ -1,21 +1,16 @@
 version: "3.8"
 services:
   db:
-    image: container-registry.oracle.com/database/express:21.3.0-xe
-    container_name: coleccionista-bd-oracle-test
+    image: mongo:7.0.5-jammy
+    container_name: coleccionista-bd-test
     environment:
-      - ORACLE_PWD=myPassword123
-    healthcheck: # check if the db is ready to accept connections
-      test: ["CMD", "bash", "-c", "echo exit | sqlplus -L system/myPassword123@localhost:1521/xe"]
-      interval: 30s
-      timeout: 10s
-      retries: 10
-      start_period: 2m
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=myPassword123
     ports:
-      - 1521:1521
-      - 5500:5500
+      - 27017:27017
     volumes:
-      - oracle_db_volume:/opt/oracle/oradata
+      - mongodb_Coleccionista:/data/db
+      - mongodb_config_Coleccionista:/data/configdb
     networks:
       - Coleccionista_net
 
@@ -29,8 +24,7 @@ services:
       - "8000:80"
 
     depends_on:
-      db:
-        condition: service_healthy # wait for the db to be healthy (in relation to the healthcheck above)
+      - db
     networks:
       - Coleccionista_net
 
@@ -50,5 +44,3 @@ services:
 
 networks:
   Coleccionista_net:
-volumes:
-  oracle_db_volume:
