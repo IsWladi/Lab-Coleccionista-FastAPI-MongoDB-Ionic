@@ -14,8 +14,8 @@
 * [How to Run the Project Locally with Docker](#how-to-run-the-project-locally-with-docker)
     * [Requirements](#requirements)
     * [Run Docker Containers](#run-docker-containers)
-    * [Connect to the Database via SQL Developer](#connect-to-the-database-via-sql-developer)
-* [How to manage the containers](#how-to-manage-the-containers)
+    * [Connect to the Database via MongoDB Compass](#connect-to-the-database-via-mongodb-compass)
+* [How to manage the containers (basic usage)](#how-to-manage-the-containers-basic-usage)
 * [How to run the tests](#how-to-run-the-tests)
 * [Project Structure](#project-structure)
 * [References](#references)
@@ -50,26 +50,25 @@
             * [Install zsh in WSL2 distro](https://terminaldelinux.com/terminal/preparacion-entorno/instalacion-zsh/)
         * Notes:
             * Clone the repository in the wsl2 distro filesystem, not in Windows filesystem.
-            * Manage the containers within the WSL2 distro, not in Windows.
-            * If you don´t want to edit the files in the WSL2 distro, you can edit them in Windows([editing the distro filesystem](https://terminaldelinux.com/terminal/wsl/configuracion-wsl/#acceder-a-linux-desde-windows)) and the changes will be reflected in the WSL2 distro filesystem.
+            * You can manage the containers in Windows by referring to the WSL2 distro's filesystem..
+            * If you don´t want to edit the files in the WSL2 distro, you can edit them in Windows([access Linux from Windows](https://terminaldelinux.com/terminal/wsl/configuracion-wsl/#acceder-a-linux-desde-windows)) and the changes will be reflected in the WSL2 distro filesystem.
 
-- [SQL Developer 23.1.0](https://www.oracle.com/tools/downloads/sqldev-downloads-23.1.0.html)
+- [MongoDB Compass](https://www.mongodb.com/try/download/compass)
 
 ## Run Docker Containers
 - Execute `docker compose up -d` at the root of the project (if you encounter an error about the compose command, try with `docker-compose up -d`, as this may occur with older versions of Docker).
 - When finished, navegate to `localhost:8000/docs` to view the api documentation
-- Note: The wait time for the command to complete may exceed 5 minutes as it involves downloading the Oracle database. Additionally, the API container will wait until the database is in a healthy state before receiving connections, ensuring that the API functions correctly.
+- When finished, navegate to `localhost:8100` to view the Ionic app
 
-## Connect to the Database via SQL Developer
-- Use the example below (the password is defined in the compose.yaml file):
-  ![image](https://github.com/IsWladi/Lab-Ionic-FastAPI-MongoDB/assets/133131317/458c3c71-6645-4d8d-a9c4-ec5d70bf7e3b)
+## Connect to the Database via MongoDB Compass
+- Use the example below (the username and password are defined in the compose.yaml file):
+   ![image](https://github.com/IsWladi/Lab-Portfolio-Ionic-FastAPI-Oracle/assets/133131317/15f15744-4a90-4ef0-ab4b-94ff0724d121)
 
-# How to manage the containers
+# How to manage the containers (basic usage)
 - Execute `docker compose start` at the root of the project to start the containers.
 - Execute `docker compose stop` at the root of the project to stop the containers.
 - Note:
-    * If you want to restart the containers, avoid using `docker compose restart` because a bug cause that the database is started after the API. Instead, use `docker compose stop` and then `docker compose start`.
-    * The API container has hot reload enabled, so you don't need to restart it when you make changes to the code.
+    * The API and the Ionic containers have hot reload enabled, so you don't need to restart the containers when you make changes to the code.
 
 # How to run the tests
 - When the containers are running, execute `docker exec -it coleccionista-api-test bash` to enter the container.
@@ -83,6 +82,7 @@
 ## Route: `./`
 - `.github/` - GitHub Actions workflows (CI/CD)
 - `api/` - API configuration files and source code
+- `coleccti-mate/` - Ionic app configuration files and source code
 - `.dockerignore` - Files to ignore when building the Docker images
 - `.gitignore` - Files to ignore when pushing to the repository
 - `.spaceignore` - Files to ignore when deploying to Deta Space
@@ -117,9 +117,10 @@
 - [FastAPI - Advanced testing, lifespan](https://fastapi.tiangolo.com/advanced/testing-events/#testing-events-startup-shutdown)
 
 ## Database
-- [Oracle - Oracle Container Registry - Oracle Database XE Release 21c (21.3.0.0)](https://container-registry.oracle.com/ords/f?p=113:4:8227059033940:::4:P4_REPOSITORY,AI_REPOSITORY,AI_REPOSITORY_NAME,P4_REPOSITORY_NAME,P4_EULA_ID,P4_BUSINESS_AREA_ID:803,803,Oracle%20Database%20Express%20Edition,Oracle%20Database%20Express%20Edition,1,0&cs=3UHW8565qyh-pcnTW8hJpndMMN-pfSM4R7K2Ym0DrVdyu1QIujgszQIXdX2SJ9sbj4tBMXfJtH9oqtBh917cpfw)
-- [Oracle - SQL Developer 23.1.0](https://www.oracle.com/tools/downloads/sqldev-downloads-23.1.0.html)
-- [Python/Oracle - oracledb documentation](https://python-oracledb.readthedocs.io/en/latest/)
+- [MongoDB Web](https://www.mongodb.com/)
+- [MongoDB Compass](https://www.mongodb.com/products/tools/compass)  
+- [DockerHub - MongoDB](https://hub.docker.com/_/mongo)
+- [Python/MongoDB - PyMongo documentation](https://pymongo.readthedocs.io/en/stable/)
 
 ## Deployment
 - [DetaSpace - Run a Python App on DetaSpace](https://deta.space/docs/en/build/quick-starts/python/)
