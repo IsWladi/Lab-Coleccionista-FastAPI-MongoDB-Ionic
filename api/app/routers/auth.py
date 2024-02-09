@@ -73,8 +73,8 @@ async def register(request: Request, user: UserRegistration):
     users_collection = db["users"]
 
     # validate user if exists
-    user = users_collection.find_one({ "username": user.username })
-    if user:
+    finded_user = users_collection.find_one({ "username": user.username })
+    if finded_user:
         raise HTTPException(status_code=409, detail="User already exists")
     users_collection.insert_one(
             {"username": user.username, "hashed_password": hashed_password.decode('utf-8')})
@@ -83,5 +83,5 @@ async def register(request: Request, user: UserRegistration):
     if usuario_check:
         return str(usuario_check["_id"])
     else:
-        return False
+        raise HTTPException(status_code=500, detail="Error creating user")
 
