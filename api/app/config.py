@@ -1,6 +1,7 @@
 import os
-import oracledb
 from enum import Enum
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
 # Oauth2 settings
 class Oauth2Settings(Enum):
@@ -11,21 +12,26 @@ class Oauth2Settings(Enum):
 
 # Database settings
 class DatabaseSettings(Enum):
-	DB_DSN = os.environ.get("ORACLE_CLOUD_DSN") or "coleccionista-bd-oracle-test:1521/xe"
-	DB_USER = os.environ.get("ORACLE_CLOUD_USER") or "system"
-	DB_PASSWORD = os.environ.get("ORACLE_CLOUD_PASSWORD") or "myPassword123"
-	MIN_POOL = 2 if os.environ.get("PRODUCTION") == "True" else 1
-	MAX_POOL = 5 if os.environ.get("PRODUCTION") == "True" else 1
-	POOL_INCREMENT = 1 if os.environ.get("PRODUCTION") == "True" else 0
+    MONGO_USERNAME = os.environ.get("MONGO_USERNAME") or "admin"
+    MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD") or "myPassword123"
+    MONGO_CLUSTER = os.environ.get("MONGO_CLUSTER") or None
+    MAX_POOL = 200 if os.environ.get("PRODUCTION") == "True" else 1
 
-# Function to initialize the database connection pool at startup
+# Function to initialize the database client
 # It is called in the lifespan function in main.py
-def init_pool():
-	pool = oracledb.create_pool( user=DatabaseSettings.DB_USER.value,
-								 password=DatabaseSettings.DB_PASSWORD.value,
-								 dsn=DatabaseSettings.DB_DSN.value,
-								 min=DatabaseSettings.MIN_POOL.value,
-								 max=DatabaseSettings.MAX_POOL.value,
-							     increment=DatabaseSettings.POOL_INCREMENT.value)
-	return pool
+def get_db_client():
+    mongo_db = None
+    if os.environ.get("PRODUCTION") == "True":
+        uri = f"mongodb+srv://{DatabaseSettings.MONGO_USERNAME.value}:{DatabaseSettings.MONGO_PASSWORD.value}@{DatabaseSettings.MONGO_CLUSTER.value}/?retryWrites=true&w=majority"
+        mongo_db = MongoClient(uri, server_api=ServerApi('1')).ColeccionistaCluster
+
+    else:
+        mongo_client = MongoClient("mongodb://coleccionista-bd-test:27017/",
+                                   username=DatabaseSettings.MONGO_USERNAME.value,
+                                   password=DatabaseSettings.MONGO_PASSWORD.value)
+
+        # Get the database
+        mongo_db = mongo_client["coleccionista-bd-test"]
+
+    return mongo_db
 

@@ -13,17 +13,16 @@ from app.config import Oauth2Settings
 ALGORITHM = Oauth2Settings.ALGORITHM.value
 SECRET_KEY = Oauth2Settings.SECRET_KEY.value
 
-
-
 # Verify if the username exists in the database
 def get_user(username: str, request: Request ):
-	with request.app.state.db_pool.acquire() as connection:
-		with connection.cursor() as cursor:
-			cursor.execute("select username from users where username = :username", username=username)
-			result = cursor.fetchone()
-			if result is None:
-				return False
-			return User(username=result[0])
+    db = request.app.state.db_pool # get a reference of the mongo db client created at startup in main.py
+    users_collection = db["users"] # get access to the "users" collection
+
+    # check if the username exists in the database
+    user = users_collection.find_one({"username": username})
+    if user is None:
+        return False # the username does not exist
+    return User(username=user["username"])
 
 # Verify if the user is authenticated with the jwt token and return the username if it is authenticated
 # It is a dependency for authenticated routes

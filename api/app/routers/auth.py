@@ -21,20 +21,22 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token") # if there is a
 
 # Verify if the username and password are correct and return the username if it is correct
 def authenticate_user(username: str, password: str, request: Request):
-	#get user from database
-	finded_user = None
-	with request.app.state.db_pool.acquire() as connection:
-		with connection.cursor() as cursor:
-			cursor.execute("select * from users where username = :username", username=username)
-			result = cursor.fetchone()
-			if result is None: # user not found
-				return False
-			finded_user = { "username":result[0], "hashed_password":result[1] }
-	# check password
-	if bcrypt.checkpw(password.encode('utf-8'), finded_user["hashed_password"].encode('utf-8')):
-		return username
-	else: # password incorrect
-		return False
+    #get user from database
+    finded_user = None
+    db = request.app.state.db_pool
+    users_collection = db["users"]
+
+    # validate user if exists
+    user = users_collection.find_one({ "username": username })
+    if user is None:
+        return False # user not found
+    finded_user = { "username":user["username"], "hashed_password":user["hashed_password"] }
+
+    # check password
+    if bcrypt.checkpw(password.encode('utf-8'), finded_user["hashed_password"].encode('utf-8')):
+        return username
+    else: # password incorrect
+        return False
 
 # Create a JWT for being returned to the user in the login route
 def create_access_token(data: dict, expires_delta: timedelta = None):
@@ -61,4 +63,25 @@ async def login(request: Request, form_data: Annotated[OAuth2PasswordRequestForm
         data={"sub": user}, expires_delta=access_token_expires
     )
 	return Token(access_token=access_token, token_type="bearer")
+
+# to do: validate that the user does not exist before creating it
+@router.post("/register")
+async def register(request: Request, user: UserRegistration):
+    hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
+
+    db = request.app.state.db_pool
+    users_collection = db["users"]
+
+    # validate user if exists
+    user = users_collection.find_one({ "username": user.username })
+    if user:
+        raise HTTPException(status_code=409, detail="User already exists")
+    users_collection.insert_one(
+            {"username": user.username, "hashed_password": hashed_password.decode('utf-8')})
+
+    usuario_check = users_collection.find_one({"username": user.username})
+    if usuario_check:
+        return str(usuario_check["_id"])
+    else:
+        return False
 
