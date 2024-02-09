@@ -44,3 +44,6 @@ services:
 
 networks:
   Coleccionista_net:
+volumes:
+  mongodb_Coleccionista:
+  mongodb_config_Coleccionista:
