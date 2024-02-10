@@ -11,30 +11,36 @@ from app.models.users import UserRegistration
 from app.models.basic_auth_models import Token, TokenData, User
 
 #Constants for JWT
-from app.config import Oauth2Settings
+from app.dependencies.db_dependencies import get_db
+from app.settings import Oauth2Settings
 ALGORITHM = Oauth2Settings.ALGORITHM.value
 SECRET_KEY = Oauth2Settings.SECRET_KEY.value
 ACCESS_TOKEN_EXPIRE_MINUTES = Oauth2Settings.ACCESS_TOKEN_EXPIRE_MINUTES.value
+
+#database dependency
+from pymongo.mongo_client import MongoClient
+db_dependency = Annotated[MongoClient, Depends(get_db)] # for use: db: db_dependency
 
 router = APIRouter(prefix="/api/auth", tags=["Basic Auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token") # if there is a prefix in the router, it should be added here
 
 # Verify if the username and password are correct and return the username if it is correct
-def authenticate_user(username: str, password: str, request: Request):
-	#get user from database
-	finded_user = None
-	with request.app.state.db_pool.acquire() as connection:
-		with connection.cursor() as cursor:
-			cursor.execute("select * from users where username = :username", username=username)
-			result = cursor.fetchone()
-			if result is None: # user not found
-				return False
-			finded_user = { "username":result[0], "hashed_password":result[1] }
-	# check password
-	if bcrypt.checkpw(password.encode('utf-8'), finded_user["hashed_password"].encode('utf-8')):
-		return username
-	else: # password incorrect
-		return False
+def authenticate_user(username: str, password: str, db: MongoClient):
+    #get user from database
+    finded_user = None
+    users_collection = db["users"]
+
+    # validate user if exists
+    user = users_collection.find_one({ "username": username })
+    if user is None:
+        return False # user not found
+    finded_user = { "username":user["username"], "hashed_password":user["hashed_password"] }
+
+    # check password
+    if bcrypt.checkpw(password.encode('utf-8'), finded_user["hashed_password"].encode('utf-8')):
+        return username
+    else: # password incorrect
+        return False
 
 # Create a JWT for being returned to the user in the login route
 def create_access_token(data: dict, expires_delta: timedelta = None):
@@ -48,8 +54,8 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     return encoded_jwt
 
 @router.post("/token")
-async def login(request: Request, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:
-	user = authenticate_user(form_data.username, form_data.password, request)
+async def login(db: db_dependency, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:
+	user = authenticate_user(form_data.username, form_data.password, db)
 	if not user:
 		raise HTTPException(
             status_code=401,
@@ -62,3 +68,22 @@ async def login(request: Request, form_data: Annotated[OAuth2PasswordRequestForm
     )
 	return Token(access_token=access_token, token_type="bearer")
 
+# to do: validate that the user does not exist before creating it
+@router.post("/register")
+async def register(db: db_dependency, user: UserRegistration):
+    hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
+
+    users_collection = db["users"]
+
+    # validate user if exists
+    finded_user = users_collection.find_one({ "username": user.username })
+    if finded_user:
+        raise HTTPException(status_code=409, detail="User already exists")
+    users_collection.insert_one(
+            {"username": user.username, "hashed_password": hashed_password.decode('utf-8')})
+
+    usuario_check = users_collection.find_one({"username": user.username})
+    if usuario_check:
+        return str(usuario_check["_id"])
+    else:
+        raise HTTPException(status_code=500, detail="Error creating user")

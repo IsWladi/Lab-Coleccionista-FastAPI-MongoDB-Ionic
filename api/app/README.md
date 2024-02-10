@@ -17,7 +17,7 @@
      * `password`: The password of the user to authenticate.
  * The frontend will send the form data to the endpoint and will receive the token.
 
-### File `api\app\dependencies.py`:
+### File `api\app\dependencies\auth_dependencies.py`:
  * The function `get_current_user` is defined:
      * It is a dependency that will be used in other endpoints.
      * If a endpoint depends on this function, it will be validate the authentication of the user.
@@ -26,11 +26,13 @@
      * It will return the current user.
      * If the token is invalid, it will return an error.
 
+## Tutorials
+
 ### How to make an endpoint that requires authentication:
  * Import the following in the endpoint file:
    ```python
       from fastapi import Depends
-      from app.dependencies import get_current_user
+      from app.dependencies.auth_dependencies import get_current_user
       from typing import Annotated
       from app.models.basic_auth_models import User
     ```
@@ -44,3 +46,28 @@
        async def get_item_by_id(item: str, current_user: auth_dependency):
     ```
  * The endpoint will only be executed if the token is valid.
+
+### How to get db connection in an endpoint:
+ * Import the following in the endpoint file:
+   ```python
+      from app.dependencies.db_dependencies import get_db
+      from fastapi import Depends
+      from typing import Annotated
+      from pymongo.mongo_client import MongoClient
+    ```
+ * Define in a variable the dependency:
+    ```python
+       db_dependency = Annotated[MongoClient, Depends(get_db)]
+    ```
+ * Use the variable in the endpoint parameter, example:
+    ```python
+       @router.get("/get/item/{item}", status_code=200)
+       async def get_item_by_id(item: str, db: db_dependency):
+            # db is the connection to the database
+            # example: db["my_collection"].find_one({"item_id": item})
+    ```
+
+### Notes:
+* Both, the `auth_dependency` and the `db_dependency` are dependencies that can be used in the same endpoint.
+* See the router file `api\app\routers\examples.py` for an example of how to use the dependencies in an endpoint.
+
