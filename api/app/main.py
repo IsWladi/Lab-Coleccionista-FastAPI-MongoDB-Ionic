@@ -4,7 +4,7 @@ import os
 
 app = FastAPI()
 
-# routers
+#include routers
 app.include_router(auth.router)
 app.include_router(examples.router)
 
