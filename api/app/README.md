@@ -64,7 +64,7 @@
        @router.get("/get/item/{item}", status_code=200)
        async def get_item_by_id(item: str, db: db_dependency):
             # db is the connection to the database
-            # example: db["my_collection"].find_one({"name": item})
+            # example: db["my_collection"].find_one({"item_id": item})
     ```
 
 ### Notes:
