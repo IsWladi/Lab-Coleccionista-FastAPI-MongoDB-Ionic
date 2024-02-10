@@ -1,9 +1,10 @@
-# Lab-Coleccionista-FastAPI-Oracle
+# Lab-Coleccionista-FastAPI-MongoDB-Ionic
 **This repository is for experimentation only, for the study of the infrastructure and development cycle of the portfolio project for DuocUC.**
 
 # To Do
 - Insert fake data in the database for testing purposes when the containers are created.
 - Tests if a pull request is edited that the GitHub Action is triggered again.
+- Example of how to use the API with the Ionic app.
 
 ## Table of contents
 * [Notes](#notes)
@@ -25,11 +26,15 @@
 - Check if it's an improvement to replace bcrypt with argon2-cffi.
 
 # Published API
-( as of now, there is no published API until I have an Oracle cloud database )
+[Deta Space](https://lab_portafolio-1-k1767315.deta.app/)
 
 # How to publish the API to DetaSpace
 ## Needed Github Repository Secrets
-- As of now, there are no repository secrets for Oracle Database Cloud connections because, until now, a cloud database has not been available
+- ACCESS_TOKEN: `deta access token`
+- PROJECT_ID: `deta project id`
+- MONGO_USERNAME: `mongo username`
+- MONGO_PASSWORD: `mongo password`
+- MONGO_CLUSTER: `mongo cluster`
 
 ## Publish the API
 - Make a pull request to the `main` branch:
@@ -88,7 +93,7 @@
 - `.spaceignore` - Files to ignore when deploying to Deta Space
 -  `README.md` - Documentation of the project
 - `Spacefile` - Deta Space configuration file (for deployment)
-- `compose.yaml` - Docker Compose configuration file for local development (FastAPI + Oracle DB)
+- `compose.yaml` - Docker Compose configuration file for local development
 
 ## Route: `./api/`
 - `app/` - API source code (FastAPI)

@@ -1,0 +1,21 @@
+name: ci
+on:
+  pull_request:
+    types: [opened, edited]
+    branches:
+      - 'main'
+    paths:
+      - 'api/**'
+
+jobs:
+  run-api-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker containers
+        run: docker compose up -d
+
+      - name: Run pytest
+        run: docker exec coleccionista-api-test pytest
+
