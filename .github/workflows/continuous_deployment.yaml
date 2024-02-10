@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'api/**'
 
 env:
   MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
