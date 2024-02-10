@@ -16,14 +16,18 @@ ALGORITHM = Oauth2Settings.ALGORITHM.value
 SECRET_KEY = Oauth2Settings.SECRET_KEY.value
 ACCESS_TOKEN_EXPIRE_MINUTES = Oauth2Settings.ACCESS_TOKEN_EXPIRE_MINUTES.value
 
+#database dependency
+from app.config import get_db
+from pymongo.mongo_client import MongoClient
+db_dependency = Annotated[MongoClient, Depends(get_db)] # for use: db: db_dependency
+
 router = APIRouter(prefix="/api/auth", tags=["Basic Auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token") # if there is a prefix in the router, it should be added here
 
 # Verify if the username and password are correct and return the username if it is correct
-def authenticate_user(username: str, password: str, request: Request):
+def authenticate_user(username: str, password: str, db: MongoClient):
     #get user from database
     finded_user = None
-    db = request.app.state.db_pool
     users_collection = db["users"]
 
     # validate user if exists
@@ -50,8 +54,8 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     return encoded_jwt
 
 @router.post("/token")
-async def login(request: Request, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:
-	user = authenticate_user(form_data.username, form_data.password, request)
+async def login(db: db_dependency, form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:
+	user = authenticate_user(form_data.username, form_data.password, db)
 	if not user:
 		raise HTTPException(
             status_code=401,
@@ -66,10 +70,9 @@ async def login(request: Request, form_data: Annotated[OAuth2PasswordRequestForm
 
 # to do: validate that the user does not exist before creating it
 @router.post("/register")
-async def register(request: Request, user: UserRegistration):
+async def register(db: db_dependency, user: UserRegistration):
     hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
 
-    db = request.app.state.db_pool
     users_collection = db["users"]
 
     # validate user if exists
@@ -84,4 +87,3 @@ async def register(request: Request, user: UserRegistration):
         return str(usuario_check["_id"])
     else:
         raise HTTPException(status_code=500, detail="Error creating user")
-

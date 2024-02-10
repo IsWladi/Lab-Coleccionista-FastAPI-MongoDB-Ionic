@@ -17,9 +17,8 @@ class DatabaseSettings(Enum):
     MONGO_CLUSTER = os.environ.get("MONGO_CLUSTER") or None
     MAX_POOL = 200 if os.environ.get("PRODUCTION") == "True" else 1
 
-# Function to initialize the database client
-# It is called in the lifespan function in main.py
-def get_db_client():
+# Dependency to initialize the database client
+def get_db():
     mongo_db = None
     if os.environ.get("PRODUCTION") == "True":
         uri = f"mongodb+srv://{DatabaseSettings.MONGO_USERNAME.value}:{DatabaseSettings.MONGO_PASSWORD.value}@{DatabaseSettings.MONGO_CLUSTER.value}/?retryWrites=true&w=majority"
@@ -34,4 +33,3 @@ def get_db_client():
         mongo_db = mongo_client["coleccionista-bd-test"]
 
     return mongo_db
-

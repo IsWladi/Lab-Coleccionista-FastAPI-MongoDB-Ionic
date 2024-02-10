@@ -9,13 +9,20 @@ from app.routers.auth import  oauth2_scheme
 from app.models.basic_auth_models import TokenData, User
 
 #import constants
-from app.config import Oauth2Settings
+from app.config import Oauth2Settings, get_db
 ALGORITHM = Oauth2Settings.ALGORITHM.value
 SECRET_KEY = Oauth2Settings.SECRET_KEY.value
 
+#database dependency
+from app.config import DatabaseSettings
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import os
+
+db_dependency = Annotated[MongoClient, Depends(get_db)] # for use: db: db_dependency
+
 # Verify if the username exists in the database
-def get_user(username: str, request: Request ):
-    db = request.app.state.db_pool # get a reference of the mongo db client created at startup in main.py
+def get_user(username: str, db: MongoClient ):
     users_collection = db["users"] # get access to the "users" collection
 
     # check if the username exists in the database
@@ -27,7 +34,7 @@ def get_user(username: str, request: Request ):
 # Verify if the user is authenticated with the jwt token and return the username if it is authenticated
 # It is a dependency for authenticated routes
 # Why is it async?: I don't know, but it is in the FastAPI tutorial
-async def get_current_user(request: Request, token: Annotated[str, Depends(oauth2_scheme)]):
+async def get_current_user(db: db_dependency,token: Annotated[str, Depends(oauth2_scheme)]):
     credentials_exception = HTTPException(
         status_code=401,
         detail="Could not validate credentials",
@@ -41,7 +48,7 @@ async def get_current_user(request: Request, token: Annotated[str, Depends(oauth
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = get_user(username=token_data.username, request=request)
+    user = get_user(username=token_data.username, db=db)
     if user is None:
         raise credentials_exception
     return user
