@@ -132,6 +132,9 @@
 - [DetaSpace - GitHub Action for DetaSpace](https://github.com/marketplace/actions/deta-space-deployment-github-action)
 - [DetaSpace - Setting Environment Variables within a Spacefile](https://deta.space/docs/en/build/fundamentals/the-space-runtime/configuration#environment-variables)
 
+## Continuous Integration/Continuous Deployment
+- [GitHub Actions - Pull request syncronyze](https://github.com/orgs/community/discussions/24567)
+
 ## Docker
 - [DockerHub - Python](https://hub.docker.com/_/python)
 - [Docker Compose - Healthcheck](https://docs.docker.com/compose/compose-file/compose-file-v3/#healthcheck)
