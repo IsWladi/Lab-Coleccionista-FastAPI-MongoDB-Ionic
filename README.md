@@ -96,13 +96,13 @@
 - `requirements.txt` - Python dependencies for the FastAPI app
 
 ## Route: `./api/app/`
+- `dependencies/` - Avaliable dependencies for the API (db, auth, etc.)
 - `models/` - Pydantic models for be used in the endpoints
 - `routers/` - API source code for each set of endpoints ( for separation of concerns)
 - `tests/` - API tests (pytest)
 - `README.md` - Specific documentation for the API (not as a replacement for the Swagger docs)
-- `config.py` - Environment variables, database connection function, secrets, etc.
-- `dependencies.py` - Dependency injection for the endpoints
 - `main.py` - API main file ( app creation, routers addition, definition of the lifespan events, etc. )
+- `settings.py` - Enums; environment variables, secrets, etc.
 
 # References:
 
@@ -118,7 +118,7 @@
 
 ## Database
 - [MongoDB Web](https://www.mongodb.com/)
-- [MongoDB Compass](https://www.mongodb.com/products/tools/compass)  
+- [MongoDB Compass](https://www.mongodb.com/products/tools/compass)
 - [DockerHub - MongoDB](https://hub.docker.com/_/mongo)
 - [Python/MongoDB - PyMongo documentation](https://pymongo.readthedocs.io/en/stable/)
 

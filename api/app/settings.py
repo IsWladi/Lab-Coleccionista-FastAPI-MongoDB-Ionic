@@ -13,4 +13,3 @@ class DatabaseSettings(Enum):
     MONGO_USERNAME = os.environ.get("MONGO_USERNAME") or "admin"
     MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD") or "myPassword123"
     MONGO_CLUSTER = os.environ.get("MONGO_CLUSTER") or None
-    MAX_POOL = 200 if os.environ.get("PRODUCTION") == "True" else 1
