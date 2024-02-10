@@ -26,6 +26,8 @@
      * It will return the current user.
      * If the token is invalid, it will return an error.
 
+## Tutorials
+
 ### How to make an endpoint that requires authentication:
  * Import the following in the endpoint file:
    ```python
@@ -59,8 +61,13 @@
     ```
  * Use the variable in the endpoint parameter, example:
     ```python
-       @router.get("/get/item/{item_name}", status_code=200)
-       async def get_item_by_name(item_name: str, db: db_dependency):
+       @router.get("/get/item/{item}", status_code=200)
+       async def get_item_by_id(item: str, db: db_dependency):
             # db is the connection to the database
-            # example: db["my_collection"].find_one({"name": item_name})
+            # example: db["my_collection"].find_one({"name": item})
     ```
+
+### Notes:
+* Both, the `auth_dependency` and the `db_dependency` are dependencies that can be used in the same endpoint.
+* See the router file `api\app\routers\examples.py` for an example of how to use the dependencies in an endpoint.
+
