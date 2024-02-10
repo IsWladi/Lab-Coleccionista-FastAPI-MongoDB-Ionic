@@ -11,13 +11,13 @@ from app.models.users import UserRegistration
 from app.models.basic_auth_models import Token, TokenData, User
 
 #Constants for JWT
-from app.config import Oauth2Settings
+from app.dependencies.db_dependencies import get_db
+from app.settings import Oauth2Settings
 ALGORITHM = Oauth2Settings.ALGORITHM.value
 SECRET_KEY = Oauth2Settings.SECRET_KEY.value
 ACCESS_TOKEN_EXPIRE_MINUTES = Oauth2Settings.ACCESS_TOKEN_EXPIRE_MINUTES.value
 
 #database dependency
-from app.config import get_db
 from pymongo.mongo_client import MongoClient
 db_dependency = Annotated[MongoClient, Depends(get_db)] # for use: db: db_dependency
 

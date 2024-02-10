@@ -12,8 +12,8 @@ from app.models.users import UserRegistration
 
 # import the dependencies for validating the token
 from fastapi import Depends
-from app.dependencies import get_current_user
-from app.config import get_db
+from app.dependencies.auth_dependencies import get_current_user
+from app.dependencies.db_dependencies import get_db
 from pymongo.mongo_client import MongoClient
 from typing import Annotated
 from app.models.basic_auth_models import User

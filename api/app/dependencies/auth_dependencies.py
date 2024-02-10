@@ -9,12 +9,12 @@ from app.routers.auth import  oauth2_scheme
 from app.models.basic_auth_models import TokenData, User
 
 #import constants
-from app.config import Oauth2Settings, get_db
+from app.settings import Oauth2Settings, DatabaseSettings
 ALGORITHM = Oauth2Settings.ALGORITHM.value
 SECRET_KEY = Oauth2Settings.SECRET_KEY.value
 
 #database dependency
-from app.config import DatabaseSettings
+from app.dependencies.db_dependencies import get_db
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import os
