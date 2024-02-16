@@ -80,7 +80,12 @@ async def register(db: db_dependency, user: UserRegistration):
     if finded_user:
         raise HTTPException(status_code=409, detail="User already exists")
     users_collection.insert_one(
-            {"username": user.username, "hashed_password": hashed_password.decode('utf-8')})
+            {"username": user.username,
+             "hashed_password": hashed_password.decode('utf-8'),
+             "email": user.email,
+             "coleccion": user.coleccion.dict(),
+             "fecha_registro": user.fecha_registro
+             })
 
     usuario_check = users_collection.find_one({"username": user.username})
     if usuario_check:
