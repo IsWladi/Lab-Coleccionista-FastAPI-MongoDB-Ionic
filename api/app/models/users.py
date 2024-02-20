@@ -1,7 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import datetime
 from .collections import Libro, Figura, Arma, Carta, Videojuego
 from typing import List
+from app.settings import ModelConstraintsSettings
 
 
 class ColeccionUsuario(BaseModel):
@@ -21,8 +22,13 @@ class Usuario(BaseModel):
 
 
 class UserRegistration(BaseModel):
-    username: str
-    password: str
+    username: str = Field(..., min_length=ModelConstraintsSettings.min_length_username.value,
+                          max_length=ModelConstraintsSettings.max_length_username.value,
+                          pattern=ModelConstraintsSettings.username_regex.value)
+
+    password: str = Field(..., min_length=ModelConstraintsSettings.min_length_password.value,
+                          max_length=ModelConstraintsSettings.max_length_password.value,
+                          pattern=ModelConstraintsSettings.password_regex.value)
     email: str
     coleccion: ColeccionUsuario = ColeccionUsuario(
         videojuegos=[], cartas=[], armas=[], figuras=[], libros=[])
