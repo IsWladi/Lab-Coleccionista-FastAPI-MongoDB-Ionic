@@ -83,7 +83,7 @@ async def register(db: db_dependency, user: UserRegistration):
             {"username": user.username,
              "hashed_password": hashed_password.decode('utf-8'),
              "email": user.email,
-             "coleccion": user.coleccion.dict(),
+             "coleccion": user.coleccion.model_dump(),
              "fecha_registro": user.fecha_registro
              })
 
