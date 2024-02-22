@@ -26,11 +26,12 @@ class DatabaseSettings(Enum):
 
 class ModelConstraintsSettings(Enum):
     # passwords constraints
-    max_length_password = 6 if os.environ.get("PRODUCTION") is None else 200
-    min_length_password = 3 if os.environ.get("PRODUCTION") is None else 8
-    password_regex = r"^[a-zA-Z0-9_]*$" # add real password regex
+    max_length_password = 128
+    min_length_password = 8
+    password_regex = r"^[a-zA-Z0-9_!@#$%^&*]*$" # add real password regex
+    # !@#$%^&*
 
     # username constraints
-    max_length_username = 6 if os.environ.get("PRODUCTION") is None else 20
-    min_length_username = 3 if os.environ.get("PRODUCTION") is None else 6
+    max_length_username = 15
+    min_length_username = 6
     username_regex = r"^[a-zA-Z0-9_]*$"
