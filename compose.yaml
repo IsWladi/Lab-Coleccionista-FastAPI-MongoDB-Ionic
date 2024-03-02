@@ -33,11 +33,13 @@ services:
     build: ./coleccti-mate
     command: ionic serve --host=0.0.0.0 --port=8100
     volumes:
-      - ./coleccti-mate:/code
+      - ./coleccti-mate:/app
+      - node_modules:/app/node_modules
     ports:
       - "8100:8100"
     depends_on:
       - api
+    working_dir: /app
     networks:
       - Coleccionista_net
 
@@ -46,3 +48,4 @@ networks:
 volumes:
   mongodb_Coleccionista:
   mongodb_config_Coleccionista:
+  node_modules:
