@@ -87,7 +87,7 @@
 ## Route: `./`
 - `.github/` - GitHub Actions workflows (CI/CD)
 - `api/` - API configuration files and source code
-- `coleccti-mate/` - Ionic app configuration files and source code
+- `mobile/` - Ionic app configuration files and source code
 - `.dockerignore` - Files to ignore when building the Docker images
 - `.gitignore` - Files to ignore when pushing to the repository
 - `.spaceignore` - Files to ignore when deploying to Deta Space
@@ -99,6 +99,10 @@
 - `app/` - API source code (FastAPI)
 - `Dockerfile` - Docker configuration file for the FastAPI app
 - `requirements.txt` - Python dependencies for the FastAPI app
+
+## Route: `./mobile/`
+- `./coleccti-mate/` - APP source code (Ionic)
+- `Dockerfile` - Docker configuration file for the Ionic app
 
 ## Route: `./api/app/`
 - `dependencies/` - Avaliable dependencies for the API (db, auth, etc.)
