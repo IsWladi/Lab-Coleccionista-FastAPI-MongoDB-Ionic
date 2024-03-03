@@ -1,8 +1,18 @@
 from fastapi import FastAPI
 from .routers import examples, auth
+from fastapi.middleware.cors import CORSMiddleware
 import os
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    # allow_origins=["http://localhost:8100"],
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
 
 #include routers
 app.include_router(auth.router)
