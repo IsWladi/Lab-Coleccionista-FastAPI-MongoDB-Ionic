@@ -1,29 +1,36 @@
 # Lab-Coleccionista-FastAPI-MongoDB-Ionic
 **This repository is for experimentation only, for the study of the infrastructure and development cycle of the portfolio project for DuocUC.**
 
-# To Do
-- Insert fake data in the database for testing purposes when the containers are created.
-- Tests if a pull request is edited that the GitHub Action is triggered again.
-- Example of how to use the API with the Ionic app.
-
 ## Table of contents
-* [Notes](#notes)
-* [Published API](#published-api)
-* [How to publish the API to DetaSpace](#how-to-publish-the-api-to-detaspace)
-    * [Needed GitHub Repository Secrets](#needed-github-repository-secrets)
-    * [Publish the API](#publish-the-api)
-* [How to Run the Project Locally with Docker](#how-to-run-the-project-locally-with-docker)
-    * [Requirements](#requirements)
-    * [Run Docker Containers](#run-docker-containers)
-    * [Connect to the Database via MongoDB Compass](#connect-to-the-database-via-mongodb-compass)
-* [How to manage the containers (basic usage)](#how-to-manage-the-containers-basic-usage)
-* [How to run the tests](#how-to-run-the-tests)
-* [Project Structure](#project-structure)
-* [References](#references)
+- [Notes](#notes)
+- [Published API](#published-api)
+- [How to publish the API to DetaSpace](#how-to-publish-the-api-to-detaspace)
+  * [Needed Github Repository Secrets](#needed-github-repository-secrets)
+  * [Publish the API](#publish-the-api)
+- [How to set up the local environment](#how-to-set-up-the-local-environment)
+  * [Set Up FastAPI and MongoDB with Docker](#set-up-fastapi-and-mongodb-with-docker)
+    + [Requirements](#requirements)
+    + [Run Docker Containers](#run-docker-containers)
+    + [Connect to the Database via MongoDB Compass](#connect-to-the-database-via-mongodb-compass)
+  * [Set Up the Ionic APP Locally](#set-up-the-ionic-app-locally)
+    + [Requirements](#requirements-1)
+    + [Running the App](#running-the-app)
+- [How to Manage the Environment](#how-to-manage-the-environment)
+  * [Manage the containers (basic usage) - FastAPI and MongoDB](#manage-the-containers-basic-usage---fastapi-and-mongodb)
+  * [Run the tests - FastAPI](#run-the-tests---fastapi)
+- [Project Structure](#project-structure)
+  * [Route: `./`](#route-)
+  * [Route: `./api/`](#route-api)
+  * [Route: `./api/app/`](#route-apiapp)
+- [References:](#references)
+  * [API](#api)
+  * [Database](#database)
+  * [Deployment](#deployment)
+  * [Continuous Integration/Continuous Deployment](#continuous-integrationcontinuous-deployment)
+  * [Docker](#docker)
 
 # Notes
 - Bug: If I've updated the repository secrets, I need to update the environment variables in Deta Space because they are not updated automatically.
-- Check if it's an improvement to replace bcrypt with argon2-cffi.
 
 # Published API
 [Deta Space](https://lab_portafolio-1-k1767315.deta.app/)
@@ -41,8 +48,11 @@
     - The GitHub Action will run the tests for being able to merge the pull request.
     - When merged, the GitHub Action will publish the API to Deta Space.
 
-# How to Run the Project Locally with Docker
-## Requirements
+# How to set up the local environment
+
+## Set Up FastAPI and MongoDB with Docker
+
+### Requirements
 - Linux:
     - [Docker engine (with docker compose)](https://docs.docker.com/engine/install/)
 - Windows:
@@ -60,22 +70,37 @@
 
 - [MongoDB Compass](https://www.mongodb.com/try/download/compass)
 
-## Run Docker Containers
+### Run Docker Containers
 - Execute `docker compose up -d` at the root of the project (if you encounter an error about the compose command, try with `docker-compose up -d`, as this may occur with older versions of Docker).
 - When finished, navegate to `localhost:8000/docs` to view the api documentation
-- When finished, navegate to `localhost:8100` to view the Ionic app
 
-## Connect to the Database via MongoDB Compass
+### Connect to the Database via MongoDB Compass
 - Use the example below (the username and password are defined in the compose.yaml file):
    ![image](https://github.com/IsWladi/Lab-Portfolio-Ionic-FastAPI-Oracle/assets/133131317/15f15744-4a90-4ef0-ab4b-94ff0724d121)
 
-# How to manage the containers (basic usage)
+
+## Set Up the Ionic APP Locally
+
+### Requirements
+- [Node v20.11.1](https://nodejs.org/en)
+- Ionic 7.1.1: `npm install -g @ionic/cli@7.1.1`
+- Angular 17.1.1: `npm install -g @angular/cli@17.1.1`
+- Android Studio
+
+### Running the App
+- Open your terminal and navigate to the ./coleccti-mate/ folder.
+- Execute the command: `ionic serve`
+- Optional: To test the app with the production configuration (which accesses the DetaSpace API instead of the local API), use: `ionic serve --prod`
+
+# How to Manage the Environment
+
+## Manage the containers (basic usage) - FastAPI and MongoDB
 - Execute `docker compose start` at the root of the project to start the containers.
 - Execute `docker compose stop` at the root of the project to stop the containers.
 - Note:
-    * The API and the Ionic containers have hot reload enabled, so you don't need to restart the containers when you make changes to the code.
+    * The API container have hot reload enabled, so you don't need to restart the containers when you make changes to the code.
 
-# How to run the tests
+## Run the tests - FastAPI
 - When the containers are running, execute `docker exec -it coleccionista-api-test bash` to enter the container.
 - Once inside the container:
     - Execute `pytest` to run all the tests.
@@ -87,7 +112,7 @@
 ## Route: `./`
 - `.github/` - GitHub Actions workflows (CI/CD)
 - `api/` - API configuration files and source code
-- `mobile/` - Ionic app configuration files and source code
+- `./coleccti-mate/` - APP source code (Ionic)
 - `.dockerignore` - Files to ignore when building the Docker images
 - `.gitignore` - Files to ignore when pushing to the repository
 - `.spaceignore` - Files to ignore when deploying to Deta Space
@@ -99,10 +124,6 @@
 - `app/` - API source code (FastAPI)
 - `Dockerfile` - Docker configuration file for the FastAPI app
 - `requirements.txt` - Python dependencies for the FastAPI app
-
-## Route: `./mobile/`
-- `./coleccti-mate/` - APP source code (Ionic)
-- `Dockerfile` - Docker configuration file for the Ionic app
 
 ## Route: `./api/app/`
 - `dependencies/` - Avaliable dependencies for the API (db, auth, etc.)
