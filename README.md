@@ -16,12 +16,9 @@
     + [Requirements](#requirements-1)
     + [Running the App](#running-the-app)
 - [How to Manage the Environment](#how-to-manage-the-environment)
-  * [Manage the containers (basic usage) - FastAPI and MongoDB](#manage-the-containers-basic-usage---fastapi-and-mongodb)
+  * [Manage the containers (basic usage) - FastAPI and MongoDB](#manage-the-containers-(basic-usage)---fastapi-and-mongodb)
   * [Run the tests - FastAPI](#run-the-tests---fastapi)
 - [Project Structure](#project-structure)
-  * [Route: `./`](#route-)
-  * [Route: `./api/`](#route-api)
-  * [Route: `./api/app/`](#route-apiapp)
 - [References:](#references)
   * [API](#api)
   * [Database](#database)
@@ -88,9 +85,11 @@
 - Android Studio
 
 ### Running the App
-- Open your terminal and navigate to the ./coleccti-mate/ folder.
+- [Ensure that the FastAPI and MongoDB containers are running.](#manage-the-containers-(basic-usage)---fastapi-and-mongodb)
+- Open your terminal and navigate to the ./mobile/coleccti-mate/ folder.
 - Execute the command: `ionic serve`
 - Optional: To test the app with the production configuration (which accesses the DetaSpace API instead of the local API), use: `ionic serve --prod`
+- When finished, navegate to `localhost:8100/` to view the Ionic app.
 
 # How to Manage the Environment
 
@@ -112,7 +111,7 @@
 ## Route: `./`
 - `.github/` - GitHub Actions workflows (CI/CD)
 - `api/` - API configuration files and source code
-- `./coleccti-mate/` - APP source code (Ionic)
+- `mobile/` - Ionic app configuration files and source code
 - `.dockerignore` - Files to ignore when building the Docker images
 - `.gitignore` - Files to ignore when pushing to the repository
 - `.spaceignore` - Files to ignore when deploying to Deta Space
@@ -133,6 +132,10 @@
 - `README.md` - Specific documentation for the API (not as a replacement for the Swagger docs)
 - `main.py` - API main file ( app creation, routers addition, definition of the lifespan events, etc. )
 - `settings.py` - Enums; environment variables, secrets, etc.
+
+## Route: `./mobile/`
+- `./coleccti-mate/` - APP source code (Ionic)
+- `Dockerfile` - Docker configuration file for the Ionic app
 
 # References:
 
