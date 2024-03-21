@@ -25,6 +25,7 @@
   * [Deployment](#deployment)
   * [Continuous Integration/Continuous Deployment](#continuous-integrationcontinuous-deployment)
   * [Docker](#docker)
+  * [Axios](#axios)
 
 # Notes
 - Bug: If I've updated the repository secrets, I need to update the environment variables in Deta Space because they are not updated automatically.
@@ -150,7 +151,7 @@
 - [FastAPI - Advanced testing, lifespan](https://fastapi.tiangolo.com/advanced/testing-events/#testing-events-startup-shutdown)
 
 ## Database
-- [MongoDB Web](https://www.mongodb.com/)
+- [MongoDB - Web](https://www.mongodb.com/)
 - [MongoDB Compass](https://www.mongodb.com/products/tools/compass)
 - [DockerHub - MongoDB](https://hub.docker.com/_/mongo)
 - [Python/MongoDB - PyMongo documentation](https://pymongo.readthedocs.io/en/stable/)
@@ -172,3 +173,8 @@
 - [Install zsh in WSL2 distro](https://terminaldelinux.com/terminal/preparacion-entorno/instalacion-zsh/)
 - [Docker Desktop - Enable WSL2 ](https://docs.docker.com/desktop/wsl/)
 - [Enabling Docker support in WSL2 distros](https://docs.docker.com/desktop/wsl/#enabling-docker-support-in-wsl-2-distros)
+
+## Axios
+- [Axios - Web](https://axios-http.com/)
+- [Multipart/form-data](https://axios-http.com/docs/multipart)
+- [Basic example of how to use Axios](https://github.com/falconmasters/como-conectarse-a-una-api-javascript/blob/axios/app.js)

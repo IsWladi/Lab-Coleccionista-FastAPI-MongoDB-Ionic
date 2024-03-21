@@ -8,21 +8,45 @@ import axios from 'axios';
 export class ExamplesService {
   constructor() {}
   apiUrl = environment.apiUrl;
-  async getAllUsersWithoutAuth(): Promise<any> {
-    // Make a request for a user with a given ID
-    axios
-      .get(this.apiUrl + 'api/examples/get/all/users/without/authentication')
-      .then(function (response) {
-        // handle success
-        console.log(response.data[0]);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .finally(function () {
-        // always executed
-      });
+  userToken = "";
+  async login(username: string, password: string) {
+    try{
+      const form = new FormData();
+      form.append('username', username);
+      form.append('password', password);
+      const response = await axios.post(this.apiUrl + 'api/auth/token', form)
+      this.userToken = response.data.access_token
+    }catch(e){
+      console.log(e)
+    }
+
   }
+  async getAllUsersWithoutAuth() {
+    try{
+      const response = await axios.get(this.apiUrl + 'api/examples/get/all/users/without/authentication')
+      console.log(response.data);
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
+
+
+  async getAllUsersWithAuth() {
+    try{
+      const bearerToken = 'Bearer ' + this.userToken;
+      const response = await axios.get(this.apiUrl + 'api/examples/get/all/users/with/required/authentication', {
+        headers: {
+          'Authorization': bearerToken
+        }
+      })
+      console.log(response.data);
+    }
+    catch(e){
+      console.log(e)
+    }
+  }
+
+
 }
 
