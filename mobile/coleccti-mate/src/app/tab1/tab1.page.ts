@@ -10,8 +10,19 @@ export class Tab1Page implements OnInit {
   constructor(private apiService: ExamplesService) {
   }
 
-  ngOnInit() {
-    this.apiService.getAllUsersWithoutAuth();
+  async ngOnInit() {
+    await this.apiService.login("wladi1", "duoc123456");
+    if( this.apiService.userToken != ""){
+      console.log("Login success")
+      console.log("user token: " + this.apiService.userToken)
+    }
+    else{
+      console.log("invalid credentials (Unauthorized)")
+    }
+    console.log("Getting all users without authentication")
+    await this.apiService.getAllUsersWithoutAuth();
+    console.log("Getting all users with authentication (using token)")
+    await this.apiService.getAllUsersWithAuth();
   }
   //
 }
